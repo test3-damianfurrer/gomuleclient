@@ -46,7 +46,8 @@ func (this *Client) read(conn net.Conn) (buf []byte, protocol byte, err error) {
 		n, err = conn.Read(tmpbuf)
 		if err != nil {
 			fmt.Println("ERROR: on read to buf", err.Error())
-			//return
+			fmt.Println("ERROR: on read to buf full", err)
+			return
 		}
 		buf = append(buf, tmpbuf[0:n]...)
 		if n < 0 {
