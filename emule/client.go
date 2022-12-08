@@ -82,7 +82,7 @@ func (this *Client) Connect() {
 	if err != nil {
 		fmt.Println("ERROR: connecting: ", err.Error())
 	}
-	var body []byte
+	body := make([]byte,0)
 	body = append(body,0x6a,0xff,0x9d,0x13,0xba,0x4f,0x4b,0x67,0xaf,0x0c,0xf6,0xa5,0x14,0xc4,0xd4,0x99) //client uuid
 	body = append(body,util.UInt32ToByte(uint32(0))...) //client id 0 default
 	body = append(body,util.UInt16ToByte(uint16(4662))...) //tcp port default
