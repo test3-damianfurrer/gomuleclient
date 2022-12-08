@@ -57,6 +57,7 @@ func (this *Client) read(conn net.Conn) (buf []byte, protocol byte, err error) {
 			break;
 		}
 	}
+	return
 	
 }
 func (this *Client) ConnReader() {
@@ -66,11 +67,12 @@ func (this *Client) ConnReader() {
 	for {
 		buf, protocol, err = this.read(this.ClientConn,)
 		if err != nil {
-			ftm.Println("ERROR: error in response reading", err.Error())
+			fmt.Println("ERROR: error in response reading", err.Error())
 		}
 		fmt.Printf("Protocol %x",protocol)
 		fmt.Println("Received buf: ", buf)
 	}
+	return
 }
 
 func (this *Client) Connect() {
@@ -91,6 +93,7 @@ func (this *Client) Connect() {
 	data := encodeByteMsg(0xE3,0x01,body)
 	this.ClientConn.Write(data)
 	this.ConnReader()
+	return
 }
 	
 func (this *Client) Disconnect() {
