@@ -93,7 +93,7 @@ func (this *Client) Connect() {
 	
 	data := util.EncodeByteMsg(0xE3,0x01,body)
 	this.ClientConn.Write(data)
-	this.ConnReader()
+	this.ConnReader() //reads all incoming data
 	return
 }
 	
