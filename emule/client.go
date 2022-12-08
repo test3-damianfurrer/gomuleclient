@@ -62,7 +62,7 @@ func (this *Client) ConnReader() {
 	var buf []byte
 	var protocol byte
 	var err error
-	while true {
+	for {
 		buf, protocol, err = this.read(this.ClientConn,)
 		if err != nil {
 			ftm.Println("ERROR: error in response reading", err.Error())
