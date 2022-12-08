@@ -22,11 +22,8 @@ func init() {
 func main() {
 	flag.Parse()
 
-	if version {
-		fmt.Println("GoMule Client Version 1.0")
-		return
-	}
-
+	fmt.Println("GoMule Client Version 1.0")
+	
 	client := emule.NewClientConn(server, port, debug)
 	client.Connect()
 	defer client.Disconnect()
