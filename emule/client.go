@@ -4,7 +4,7 @@ import (
 	"fmt"
 	// "io"
 	"net"
-	"github.com/AltTechTools/gomule-tst/emule"
+	util "github.com/AltTechTools/gomule-tst/emule"
 	//"github.com/test3-damianfurrer/gomule/tree/sharedtest/emule"
 )
 
@@ -30,7 +30,7 @@ func (this *Client) read(conn net.Conn) (buf []byte, protocol byte, err error) {
 		return
 	}
 	protocol = buf[0]
-	size := ByteToUint32(buf[1:n])
+	size := util.ByteToUint32(buf[1:n])
 	//if this.Debug {
 	//	fmt.Printf("DEBUG: size %v -> %d\n", buf[1:n], size)
 	//}
@@ -84,14 +84,14 @@ func (this *Client) Connect() {
 	}
 	var body []byte
 	body = append(body,0x6a,0xff,0x9d,0x13,0xba,0x4f,0x4b,0x67,0xaf,0x0c,0xf6,0xa5,0x14,0xc4,0xd4,0x99) //client uuid
-	body = append(body,Uint32ToByte(uint32(0))...) //client id 0 default
-	body = append(body,Uint16ToByte(uint16(4662))...) //tcp port default
-	body = append(body,Uint32ToByte(uint32(3))...) //tag count
-	body = append(body,EncodeByteTagString(EncodeByteTagNameInt(0x1),"gomuleclientuser"))
-	body = append(body,EncodeByteTagInt(EncodeByteTagNameInt(0x11),uint32(0x3C)))
-	body = append(body,EncodeByteTagInt(EncodeByteTagNameInt(0x20),uint32(0b1100011101)))
+	body = append(body,util.UInt32ToByte(uint32(0))...) //client id 0 default
+	body = append(body,util.UInt16ToByte(uint16(4662))...) //tcp port default
+	body = append(body,util.UInt32ToByte(uint32(3))...) //tag count
+	body = append(body,util.EncodeByteTagString(util.EncodeByteTagNameInt(0x1),"gomuleclientuser"))
+	body = append(body,util.EncodeByteTagInt(util.EncodeByteTagNameInt(0x11),uint32(0x3C)))
+	body = append(body,util.EncodeByteTagInt(util.EncodeByteTagNameInt(0x20),uint32(0b1100011101)))
 	
-	data := EncodeByteMsg(0xE3,0x01,body)
+	data := util.EncodeByteMsg(0xE3,0x01,body)
 	this.ClientConn.Write(data)
 	this.ConnReader()
 	return
