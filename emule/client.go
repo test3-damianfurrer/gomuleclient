@@ -4,8 +4,8 @@ import (
 	"fmt"
 	// "io"
 	"net"
-	//"https://github.com/AltTechTools/gomule-tst/tree/master/emule"
-	"github.com/test3-damianfurrer/gomule/tree/sharedtest/emule"
+	"github.com/AltTechTools/gomule-tst/emule"
+	//"github.com/test3-damianfurrer/gomule/tree/sharedtest/emule"
 )
 
 type Client struct {
