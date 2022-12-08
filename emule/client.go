@@ -84,12 +84,13 @@ func (this *Client) Connect() {
 	}
 	body := make([]byte,0)
 	body = append(body,0x6a,0xff,0x9d,0x13,0xba,0x4f,0x4b,0x67,0xaf,0x0c,0xf6,0xa5,0x14,0xc4,0xd4,0x99) //client uuid
-	body = append(body,util.UInt32ToByte(uint32(0))...) //client id 0 default
+	abuf := util.UInt32ToByte(uint32(0))
+	body = append(body,abuf...) //client id 0 default
 	body = append(body,util.UInt16ToByte(uint16(4662))...) //tcp port default
 	body = append(body,util.UInt32ToByte(uint32(3))...) //tag count
-	body = append(body,util.EncodeByteTagString(util.EncodeByteTagNameInt(0x1),"gomuleclientuser"))
-	body = append(body,util.EncodeByteTagInt(util.EncodeByteTagNameInt(0x11),uint32(0x3C)))
-	body = append(body,util.EncodeByteTagInt(util.EncodeByteTagNameInt(0x20),uint32(0b1100011101)))
+	body = append(body,util.EncodeByteTagString(util.EncodeByteTagNameInt(0x1),"gomuleclientuser")...)
+	body = append(body,util.EncodeByteTagInt(util.EncodeByteTagNameInt(0x11),uint32(0x3C))...)
+	body = append(body,util.EncodeByteTagInt(util.EncodeByteTagNameInt(0x20),uint32(0b1100011101))...)
 	
 	data := util.EncodeByteMsg(0xE3,0x01,body)
 	this.ClientConn.Write(data)
