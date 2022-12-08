@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/test3-damianfurrer/gomule/emule"
+	//"github.com/test3-damianfurrer/gomule/emule"
 	"github.com/test3-damianfurrer/gomuleclient/emule"
 )
 
