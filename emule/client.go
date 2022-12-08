@@ -4,7 +4,7 @@ import (
 	"fmt"
 	// "io"
 	"net"
-	"github.com/test3-damianfurrer/gomule/emule"
+	_ "github.com/test3-damianfurrer/gomule/emule"
 )
 
 type Client struct {
