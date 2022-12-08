@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"io"
 	"net"
-
-	sam "github.com/eyedeekay/sam3/helper"
 )
 
 type Client struct {
@@ -14,8 +12,8 @@ type Client struct {
 	Debug    bool
 }
 
-func NewClient(server string, port int, debug bool) *Client {
-	return &SockSrv{
+func NewClientConn(server string, port int, debug bool) *Client {
+	return &Client{
 		Server:  server,
 		Port:    port,
 		Debug:   debug}
