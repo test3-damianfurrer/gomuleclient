@@ -73,7 +73,7 @@ func (this *Client) ConnReader() {
 			fmt.Println("ERROR: error in response readingall", err)
 			return
 		}
-		fmt.Printf("Protocol %x",protocol)
+		fmt.Printf("Protocol %x ",protocol)
 		fmt.Println("Received buf: ", buf)
 	}
 	return
