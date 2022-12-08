@@ -70,6 +70,8 @@ func (this *Client) ConnReader() {
 		buf, protocol, err = this.read(this.ClientConn,)
 		if err != nil {
 			fmt.Println("ERROR: error in response reading", err.Error())
+			fmt.Println("ERROR: error in response readingall", err)
+			return
 		}
 		fmt.Printf("Protocol %x",protocol)
 		fmt.Println("Received buf: ", buf)
