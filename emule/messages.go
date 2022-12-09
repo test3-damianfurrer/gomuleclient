@@ -35,7 +35,7 @@ func prcServerIdentification(buf []byte){
 	
 	fmt.Printf("server uuid %x-%x-%x-%x\n",serveruuid[0:4],serveruuid[4:8],serveruuid[8:12],serveruuid[12:16])
 	fmt.Println("server ip",serverip)
-	fmt.Printf("server ip %d.%d.%d.%d\n",serverip[0],serverip[1],serverip[2],serverip[3])
+	fmt.Printf("server ip %d.%d.%d.%d\n",buf[16],buf[17],buf[18],buf[19])
 	fmt.Println("server port",serverport)
 	fmt.Println("msg tags",tags)
 	
