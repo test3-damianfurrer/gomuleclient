@@ -22,6 +22,6 @@ func handleServerMsg(protocol byte,buf []byte){
 
 func prcServerTextMsg(buf []byte){
 	msglen := util.ByteToUint16(buf[0:2])
-	fmt.Printf("String: \n%s\n",buf[2:msglen])
+	fmt.Printf("String: \n%s\n",buf[2:msglen+2])
 	//util.readString(0,buf)
 }
