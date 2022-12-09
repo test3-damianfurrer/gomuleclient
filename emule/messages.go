@@ -10,7 +10,7 @@ func handleServerMsg(protocol byte,buf []byte){
 	if protocol == 0xe3 {
         switch buf[0] {
 			case 0x38:
-            	prcServerTextMsg(buf[1:bufsize])
+				prcServerTextMsg(buf[1:bufsize])
 			case 0x40:
 				prcIdChange(buf[1:bufsize])
 			case 0x34:
