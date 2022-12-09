@@ -111,6 +111,7 @@ func (this *Client) Connect() {
 	
 func (this *Client) Disconnect() {
 	//defer this.listener.Close()
+	defer this.ClientConn.Close()
 	return
 }
 
