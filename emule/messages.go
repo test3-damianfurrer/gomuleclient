@@ -27,6 +27,7 @@ func handleServerMsg(protocol byte,buf []byte){
 }
 
 func prcServerIdentification(buf []byte){
+	fmt.Printf("Server Identification")
 	serveruuid:=buf[0:16]
 	serverip:=util.ByteToUint32(buf[16:20])
 	serverport:=util.ByteToUint16(buf[20:24])
@@ -49,6 +50,7 @@ func prcServerIdentification(buf []byte){
 }
 
 func prcServerStatus(buf []byte){
+	fmt.Printf("Server Status")
 	usercount:=util.ByteToUint32(buf[0:4])
 	filecount:=util.ByteToUint32(buf[4:8])
 	fmt.Println("Server Users",usercount)
@@ -56,6 +58,7 @@ func prcServerStatus(buf []byte){
 }
 
 func prcIdChange(buf []byte){
+	fmt.Printf("ID change")
 	clientid:=util.ByteToUint32(buf[0:4])
 	fmt.Println("Client id",clientid)
 	if len(buf) == 8 {
@@ -65,6 +68,7 @@ func prcIdChange(buf []byte){
 }
 
 func prcServerTextMsg(buf []byte){
+	fmt.Printf("Server Message")
 	msglen := util.ByteToUint16(buf[0:2])
 	fmt.Printf("String: \n%s\n",buf[2:msglen+2])
 	//util.readString(0,buf)
