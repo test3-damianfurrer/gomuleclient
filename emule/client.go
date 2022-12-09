@@ -67,10 +67,15 @@ func (this *Client) ConnReader() {
 	var protocol byte
 	var err error
 	for {
-		buf, protocol, err = this.read(this.ClientConn,)
+		buf, protocol, err = this.read(this.ClientConn)
+		handleServerMsg(protocol,buf)
 		if err != nil {
-			fmt.Println("ERROR: error in response reading", err.Error())
-			fmt.Println("ERROR: error in response readingall", err)
+			if err.Error() == "EOF" {
+				fmt.Println("ERROR: END Connection", err.Error())
+			} else {
+				fmt.Println("ERROR: error in response reading", err.Error())
+				fmt.Println("ERROR: error in response readingall", err)
+			}
 			return
 		}
 		fmt.Printf("Protocol %x ",protocol)
