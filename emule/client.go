@@ -68,6 +68,7 @@ func (this *Client) ConnReader() {
 	var err error
 	for {
 		buf, protocol, err = this.read(this.ClientConn)
+		fmt.Printf("Protocol 0x%x ",protocol)
 		handleServerMsg(protocol,buf)
 		if err != nil {
 			if err.Error() == "EOF" {
@@ -78,8 +79,7 @@ func (this *Client) ConnReader() {
 			}
 			return
 		}
-		fmt.Printf("Protocol 0x%x ",protocol)
-		fmt.Println("Received buf: ", buf)
+
 	}
 	return
 }
