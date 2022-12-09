@@ -41,8 +41,8 @@ func prcServerIdentification(buf []byte){
 	
 	nlen := int(util.ByteToUint16(buf[30:32]))
 	fmt.Printf("s1 %s\n",buf[32:32+nlen])
-	nlen2 := int(util.ByteToUint16(buf[32+nlen:32+nlen+2]))
-	fmt.Printf("s2 %s\n",buf[32+nlen+2:32+nlen+2+nlen2])
+	nlen2 := int(util.ByteToUint16(buf[32+4+nlen:32+4+nlen+2]))
+	fmt.Printf("s2 %s\n",buf[32+4+nlen+2:32+4+nlen+2+nlen2])
 	
 	
 }
