@@ -31,9 +31,11 @@ func main() {
 	
 	client := emule.NewClientConn(server, port, debug)
 	client.Username=username
-	uuid_b, err:=hex.DecodeString(uuid)
+	uuid_b, err := hex.DecodeString(uuid)
 	if err !=  nil {
-		panic "provide valid hex"
+		fmt.Println("provide valid hex")
+		panic(err)
+		
 	}
 	client.Uuid=uuid_b
 	//0x6a,0xff,0x9d,0x13,0xba,0x4f,0x4b,0x67,0xaf,0x0c,0xf6,0xa5,0x14,0xc4,0xd4,0x99) //client uuid this.Uuid
