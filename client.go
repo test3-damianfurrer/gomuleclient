@@ -17,7 +17,7 @@ var (
 func init() {
 	flag.BoolVar(&debug, "d", false, "Debug")
 	flag.StringVar(&server, "h", "localhost", "Server address")
-	flag.StringVar(&server, "u", "gomuleuser", "Username")
+	flag.StringVar(&username, "u", "gomuleuser", "Username")
 	flag.IntVar(&port, "p", 7111, "Server Port number")
 }
 
