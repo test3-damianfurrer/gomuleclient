@@ -7,7 +7,7 @@ import (
 
 func handleServerMsg(protocol byte,buf []byte){
     bufsize := len(buf)
-	if protocol = 0xe3 {
+	if protocol == 0xe3 {
         switch buf[0] {
             case 0x38:
             	prcServerTextMsg(buf[1:bufsize])
