@@ -12,7 +12,7 @@ func handleServerMsg(protocol byte,buf []byte){
             case 0x38:
             	prcServerTextMsg(buf[1:bufsize])
             default:
-            	fmt.Printf("ERROR: Msg type %x not supported\n",buf[0])
+            	fmt.Printf("ERROR: Msg type 0x%x not supported\n",buf[0])
         }
     } else {
         //decode
