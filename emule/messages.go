@@ -2,16 +2,17 @@ package emule
 
 import (
 	"fmt"
+	util "github.com/AltTechTools/gomule-tst/emule"
 )
 
 func handleServerMsg(protocol byte,buf []byte){
     bufsize := len(buf)
-    if protocol = 0xe3 {
+	if protocol = 0xe3 {
         switch buf[0] {
             case 0x38:
-            prcServerTextMsg(buf[1:bufsize])
+            	prcServerTextMsg(buf[1:bufsize])
             default:
-            fmt.Printf("ERROR: Msg type %x not supported\n",buf[0])
+            	fmt.Printf("ERROR: Msg type %x not supported\n",buf[0])
         }
     } else {
         //decode
@@ -20,5 +21,7 @@ func handleServerMsg(protocol byte,buf []byte){
 }
 
 func prcServerTextMsg(buf []byte){
-    
+	msglen := util.ByteToUint16(buf[0:2])
+	fmt.Printf("String: \n%s\n",buf[2:msglen])
+	util.readString(0,buf)
 }
