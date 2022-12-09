@@ -78,7 +78,7 @@ func (this *Client) ConnReader() {
 			}
 			return
 		}
-		fmt.Printf("Protocol %x ",protocol)
+		fmt.Printf("Protocol 0x%x ",protocol)
 		fmt.Println("Received buf: ", buf)
 	}
 	return
