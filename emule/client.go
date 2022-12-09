@@ -100,6 +100,7 @@ func (this *Client) Connect() {
 	body = append(body,util.EncodeByteTagInt(util.EncodeByteTagNameInt(0x11),uint32(0x3C))...)
 	body = append(body,util.EncodeByteTagInt(util.EncodeByteTagNameInt(0x20),uint32(0b1100011101))...)
 	
+	fmt.Println("Size body", len(body))
 	data := util.EncodeByteMsg(0xE3,0x01,body)
 	this.ClientConn.Write(data)
 	this.ConnReader() //reads all incoming data
