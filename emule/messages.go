@@ -9,7 +9,7 @@ func handleServerMsg(protocol byte,buf []byte){
     bufsize := len(buf)
 	if protocol == 0xe3 {
         switch buf[0] {
-            case 0x38:
+			case 0x38:
             	prcServerTextMsg(buf[1:bufsize])
 			case 0x40:
 				prcIdChange(buf[1:bufsize])
@@ -38,6 +38,11 @@ func prcServerIdentification(buf []byte){
 	fmt.Println("msg tags",tags)
 	
 	fmt.Println("bytes tags",buf[26:len(buf)])
+	
+	nlen := int(util.ByteToUint16(buf[30:32]))
+	fmt.Printf("s1 %s\n",buf[32:32+nlen])
+	nlen2 := int(util.ByteToUint16(buf[32+nlen:32+nlen+2]))
+	fmt.Printf("s2 %s\n",buf[32+nlen+2:32+nlen+2+nlen2])
 	
 	
 }
