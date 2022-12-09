@@ -8,14 +8,16 @@ import (
 )
 
 var (
-	debug   bool
-	server  string
-	port    int
+	debug    bool
+	server   string
+	username string
+	port     int
 )
 
 func init() {
 	flag.BoolVar(&debug, "d", false, "Debug")
 	flag.StringVar(&server, "h", "localhost", "Server address")
+	flag.StringVar(&server, "u", "gomuleuser", "Username")
 	flag.IntVar(&port, "p", 7111, "Server Port number")
 }
 
@@ -25,6 +27,7 @@ func main() {
 	fmt.Println("GoMule Client Version 1.0")
 	
 	client := emule.NewClientConn(server, port, debug)
+	client.Username=username
 	client.Connect()
 	defer client.Disconnect()
 }
