@@ -47,12 +47,19 @@ func (this *Client) read(conn net.Conn) (buf []byte, protocol byte, err error) {
 		} else {
 			tmpbuf = make([]byte, toread)
 		}
+		for i := 1; i < 5; i++ {
 		n, err = conn.Read(tmpbuf)
 		if err != nil {
 			fmt.Println("ERROR: on read to buf", err.Error())
 			fmt.Println("ERROR: on read to buf full", err)
+			//return
+		}
+			break
+		}
+		if err != nil {
 			return
 		}
+		
 		buf = append(buf, tmpbuf[0:n]...)
 		if n < 0 {
 			fmt.Println("WARNING: n (conn.Read) < 0, some problem")
