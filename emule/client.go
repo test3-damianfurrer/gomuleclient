@@ -110,7 +110,7 @@ func (this *Client) Connect() {
 	fmt.Println("Size body", len(body))
 	data := util.EncodeByteMsg(0xE3,0x01,body)
 	this.ClientConn.Write(data)
-	time.Sleep(10)
+	time.Sleep(10*time.Second)
 	this.ConnReader() //reads all incoming data
 	return
 }
