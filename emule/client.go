@@ -24,7 +24,7 @@ func NewClientConn(server string, port int, debug bool) *Client {
 		Server:   server,
 		Port:     port,
 		Username: "gomuleclientuser",
-		Ctcpport: 4662
+		Ctcpport: 4662,
 		Debug:   debug}
 }
 
