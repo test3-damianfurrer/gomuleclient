@@ -12,9 +12,10 @@ func handleServerMsg(protocol byte,buf []byte,dc libdeflate.Decompressor){
 		case 0xe3:
 			decodeE3(buf)
 		case 0xd4:
-			blen, decompressed, err := dc.Decompress(buf, nil, 1)
+			fmt.Printf("DEBUG: maybe type 0x%x\n",buf[0])
+			blen, decompressed, err := dc.Decompress(buf[1:len(buf)], nil, 1)
 			if err != nil {
-				fmt.Println("ERROR: failed to decompress buffer")
+				fmt.Println("ERROR: failed to decompress buffer",err)
 				return
 			}
 			fmt.Printf("DEBUG: decompressed type 0x%x\n",decompressed[0])
