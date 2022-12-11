@@ -19,6 +19,7 @@ type Client struct {
 	Ctcpport   int
 	ClientConn net.Conn
 	Comp	   libdeflate.Compressor
+	DeComp	   libdeflate.Decompressor
 }
 
 func NewClientConn(server string, port int, debug bool) *Client {
@@ -84,7 +85,7 @@ func (this *Client) ConnReader() {
 	for {
 		buf, protocol, err = this.read(this.ClientConn)
 		fmt.Printf("Protocol 0x%x ",protocol)
-		handleServerMsg(protocol,buf,this.Comp)
+		handleServerMsg(protocol,buf,this.DeComp)
 		if err != nil {
 			if err.Error() == "EOF" {
 				fmt.Println("ERROR: END Connection", err.Error())
@@ -105,6 +106,11 @@ func (this *Client) Connect() {
 	this.Comp, err = libdeflate.NewCompressor()
 	if err != nil {
 		fmt.Println("ERROR: creating new Compressor: ", err.Error())
+		return
+	}
+	this.DeComp, err = libdeflate.NewDecompressor()
+	if err != nil {
+		fmt.Println("ERROR: creating new Decompressor: ", err.Error())
 		return
 	}
 	
