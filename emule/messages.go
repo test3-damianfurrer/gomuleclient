@@ -7,8 +7,7 @@ import (
 )
 
 func handleServerMsg(protocol byte,buf []byte,dc libdeflate.Decompressor){
-    bufsize := len(buf)
-	//0xd4
+    	//0xd4
 	switch protocol {
 		case 0xe3:
 			decodeE3(buf)
@@ -22,6 +21,7 @@ func handleServerMsg(protocol byte,buf []byte,dc libdeflate.Decompressor){
 }
 
 func decodeE3(buf []byte){
+	bufsize := len(buf)
 	switch buf[0] {
 			case 0x38:
 				prcServerTextMsg(buf[1:bufsize])
