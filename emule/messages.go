@@ -7,8 +7,17 @@ import (
 
 func handleServerMsg(protocol byte,buf []byte){
     bufsize := len(buf)
-	if protocol == 0xe3 {
-        switch buf[0] {
+	//0xd4
+	switch protocol {
+		case 0xe3:
+			decodeE3(buf)
+		default:
+			fmt.Println("ERROR: only std 0xE3 protocol supported")
+	}
+}
+
+func decodeE3(buf []byte){
+	switch buf[0] {
 			case 0x38:
 				prcServerTextMsg(buf[1:bufsize])
 			case 0x40:
@@ -20,10 +29,6 @@ func handleServerMsg(protocol byte,buf []byte){
             default:
             	fmt.Printf("ERROR: Msg type 0x%x not supported\n",buf[0])
         }
-    } else {
-        //decode
-        fmt.Println("ERROR: only std 0xE3 protocol supported")
-    }
 }
 
 func prcServerIdentification(buf []byte){
