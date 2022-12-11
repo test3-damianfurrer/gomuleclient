@@ -15,6 +15,7 @@ type Client struct {
 	Username   string
 	Uuid	   []byte
 	Debug      bool
+	Ctcpport   int
 	ClientConn net.Conn
 }
 
@@ -23,6 +24,7 @@ func NewClientConn(server string, port int, debug bool) *Client {
 		Server:   server,
 		Port:     port,
 		Username: "gomuleclientuser",
+		Ctcpport: 4662
 		Debug:   debug}
 }
 
@@ -106,7 +108,7 @@ func (this *Client) Connect() {
 	body = append(body,this.Uuid...) //client uuid
 	abuf := util.UInt32ToByte(uint32(0))
 	body = append(body,abuf...) //client id 0 default
-	body = append(body,util.UInt16ToByte(uint16(4662))...) //tcp port default
+	body = append(body,util.UInt16ToByte(uint16(this.Ctcpport))...) //tcp port default
 	body = append(body,util.UInt32ToByte(uint32(4))...) //tag count
 	body = append(body,util.EncodeByteTagString(util.EncodeByteTagNameInt(0x1),this.Username)...)
 	body = append(body,util.EncodeByteTagInt(util.EncodeByteTagNameInt(0x11),uint32(0x3C))...)
