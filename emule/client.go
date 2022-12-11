@@ -7,6 +7,7 @@ import (
 	util "github.com/AltTechTools/gomule-tst/emule"
 	"time"
 	//"github.com/test3-damianfurrer/gomule/tree/sharedtest/emule"
+	libdeflate "github.com/4kills/go-libdeflate/v2"
 )
 
 type Client struct {
@@ -17,6 +18,7 @@ type Client struct {
 	Debug      bool
 	Ctcpport   int
 	ClientConn net.Conn
+	Comp	   libdeflate.Compressor
 }
 
 func NewClientConn(server string, port int, debug bool) *Client {
@@ -82,7 +84,7 @@ func (this *Client) ConnReader() {
 	for {
 		buf, protocol, err = this.read(this.ClientConn)
 		fmt.Printf("Protocol 0x%x ",protocol)
-		handleServerMsg(protocol,buf)
+		handleServerMsg(protocol,buf,this.Comp)
 		if err != nil {
 			if err.Error() == "EOF" {
 				fmt.Println("ERROR: END Connection", err.Error())
@@ -99,9 +101,17 @@ func (this *Client) ConnReader() {
 
 func (this *Client) Connect() {
 	var err error
+	//libdeflate.Compressor
+	this.Comp, err = libdeflate.NewCompressor()
+	if err != nil {
+		fmt.Println("ERROR: creating new Compressor: ", err.Error())
+		return
+	}
+	
 	this.ClientConn, err = net.Dial("tcp",fmt.Sprintf("%s:%d",this.Server,this.Port))
 	if err != nil {
 		fmt.Println("ERROR: connecting: ", err.Error())
+		return
 	}
 	body := make([]byte,0)
 	//body = append(body,0x6a,0xff,0x9d,0x13,0xba,0x4f,0x4b,0x67,0xaf,0x0c,0xf6,0xa5,0x14,0xc4,0xd4,0x99) //client uuid this.Uuid
