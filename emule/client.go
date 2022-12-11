@@ -84,8 +84,6 @@ func (this *Client) ConnReader() {
 	var err error
 	for {
 		buf, protocol, err = this.read(this.ClientConn)
-		fmt.Printf("Protocol 0x%x ",protocol)
-		handleServerMsg(protocol,buf,this.DeComp)
 		if err != nil {
 			if err.Error() == "EOF" {
 				fmt.Println("ERROR: END Connection", err.Error())
@@ -95,7 +93,8 @@ func (this *Client) ConnReader() {
 			}
 			return
 		}
-
+		fmt.Printf("Protocol 0x%x ",protocol)
+		handleServerMsg(protocol,buf,this.DeComp)
 	}
 	return
 }
