@@ -3,14 +3,19 @@ package emule
 import (
 	"fmt"
 	util "github.com/AltTechTools/gomule-tst/emule"
+	libdeflate "github.com/4kills/go-libdeflate/v2" //libdeflate.Compressor
 )
 
-func handleServerMsg(protocol byte,buf []byte){
+func handleServerMsg(protocol byte,buf []byte,dc libdeflate.Decompressor){
     bufsize := len(buf)
 	//0xd4
 	switch protocol {
 		case 0xe3:
 			decodeE3(buf)
+		case 0xd4:
+			blen, decompressed, err := dc.Decompress(buf, nil, 1)
+			fmt.Printf("DEBUG: decompressed type 0x%x\n",decompressed[0])
+			fmt.Println("Debug: decompressed",decompressed[0:30])
 		default:
 			fmt.Println("ERROR: only std 0xE3 protocol supported")
 	}
