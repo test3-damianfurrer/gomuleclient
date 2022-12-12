@@ -6,19 +6,19 @@ import (
 	libdeflate "github.com/4kills/go-libdeflate/v2" //libdeflate.Compressor
 )
 
-func handleServerMsg(protocol byte,buf []byte,dc libdeflate.Decompressor){
+func handleServerMsg(protocol byte,buf []byte,dc libdeflate.Decompressor, client *Client){
     	//0xd4
 	switch protocol {
 		case 0xe3:
-			decodeE3(buf[0],buf[1:len(buf)])
+			decodeE3(buf[0],buf[1:len(buf)],client)
 		case 0xd4:
-			decodeD4(buf[0],buf[1:len(buf)],dc)
+			decodeD4(buf[0],buf[1:len(buf)],dc,client)
 		default:
 			fmt.Println("ERROR: only std 0xE3 protocol supported")
 	}
 }
 
-func decodeD4(btype byte,buf []byte,dc libdeflate.Decompressor){
+func decodeD4(btype byte,buf []byte,dc libdeflate.Decompressor, client *Client){
 	fmt.Printf("DEBUG: 0xd4 type 0x%x\n",btype)
 	blen, decompressed, err := dc.Decompress(buf, nil, 1)
 	if err != nil {
@@ -30,19 +30,30 @@ func decodeD4(btype byte,buf []byte,dc libdeflate.Decompressor){
 	decodeE3(btype,decompressed)
 }
 
-func decodeE3(btype byte,buf []byte){
+func decodeE3(btype byte,buf []byte, client *Client){
 	switch btype {
 			case 0x38:
 				prcServerTextMsg(buf)
 			case 0x40:
-				prcIdChange(buf)
+				prcIdChange(buf,client)
 			case 0x34:
 				prcServerStatus(buf)
+			case 0x32:
+				prcServerList(buf)
 			case 0x41:
 				prcServerIdentification(buf)
             default:
             	fmt.Printf("ERROR: Msg type 0x%x not supported\n",btype)
         }
+}
+
+func prcServerList(buf []byte){
+	offset := 1
+	for i := byte(0); i < buf[0]; i++ {
+		fmt.Printf("Server ip: %d.%d.%d.%d:",buf[offset++],buf[offset++],buf[offset++],buf[offset++])
+		offset+=2
+		fmt.Printf("%d\n",util.ByteToUint16(buf[offset-2:offset]))
+	}
 }
 
 func prcServerIdentification(buf []byte){
@@ -76,7 +87,7 @@ func prcServerStatus(buf []byte){
 	fmt.Println("Server Files",filecount)
 }
 
-func prcIdChange(buf []byte){
+func prcIdChange(buf []byte, client *Client){
 	fmt.Println("ID change")
 	clientid:=util.ByteToUint32(buf[0:4])
 	fmt.Println("Client id",clientid)
@@ -84,6 +95,11 @@ func prcIdChange(buf []byte){
 		tcpmap:=util.ByteToUint32(buf[4:8])
 		fmt.Printf("tcp map %b\n",tcpmap)
 	}
+	//test ask for serverlist
+	//client.Conn
+	size_b:=util.UInt32ToByte(uint32(1))
+	data := [6]byte{0xe3,size_b[0],size_b[1],size_b[2],size_b[3],0x14}
+	client.ClientConn.Write(data)
 }
 
 func prcServerTextMsg(buf []byte){
