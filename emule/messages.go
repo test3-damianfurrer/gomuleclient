@@ -38,11 +38,22 @@ func decodeE3(btype byte,buf []byte){
 				prcIdChange(buf)
 			case 0x34:
 				prcServerStatus(buf)
+			case 0x32:
+				prcServerList(buf)
 			case 0x41:
 				prcServerIdentification(buf)
             default:
             	fmt.Printf("ERROR: Msg type 0x%x not supported\n",btype)
         }
+}
+
+func prcServerList(buf []byte){
+	offset := 1
+	for i := byte(0); i < buf[0]; i++ {
+		fmt.Printf("Server ip: %d.%d.%d.%d:",buf[offset++],buf[offset++],buf[offset++],buf[offset++])
+		offset+=2
+		fmt.Printf("%d\n",util.ByteToUint16(buf[offset-2:offset]))
+	}
 }
 
 func prcServerIdentification(buf []byte){
