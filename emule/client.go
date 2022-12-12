@@ -20,6 +20,13 @@ type Client struct {
 	ClientConn net.Conn
 	Comp	   libdeflate.Compressor
 	DeComp	   libdeflate.Decompressor
+	SrvTCPCompression         bool
+	SrvTCPNewTags             bool
+	SrvTCPUnicode             bool
+	SrvTCPRelatedSearch       bool
+	SrvTCPTypeTagInterger     bool
+	SrvTCPLargeFiles          bool
+	SrvTCPObfuscation         bool
 }
 
 func NewClientConn(server string, port int, debug bool) *Client {
@@ -29,6 +36,55 @@ func NewClientConn(server string, port int, debug bool) *Client {
 		Username: "gomuleclientuser",
 		Ctcpport: 4662,
 		Debug:   debug}
+}
+func (this *Client) SetTCPFlags(tcpmap uint32){
+	this.SrvTCPCompression		= false
+	this.SrvTCPNewTags		= false
+	this.SrvTCPUnicode		= false
+	this.SrvTCPRelatedSearch 	= false
+	this.SrvTCPTypeTagInterger 	= false
+	this.SrvTCPLargeFiles 		= false
+	this.SrvTCPObfuscation 		= false
+	
+	if tcpmap & uint32(0x00000001) {
+		this.SrvTCPCompression = true
+		fmt.Println("this.SrvTCPCompression")
+	}
+	if tcpmap & uint32(0x00000008) {
+		this.SrvTCPNewTags = true
+		fmt.Println("this.SrvTCPNewTags")
+	}
+	if tcpmap & uint32(0x00000010) {
+		this.SrvTCPUnicode = true
+		fmt.Println("this.SrvTCPUnicode")
+	}
+	if tcpmap & uint32(0x00000040) {
+		this.SrvTCPRelatedSearch = true
+		fmt.Println("this.SrvTCPRelatedSearch")
+	}
+	if tcpmap & uint32(0x00000080) {
+		this.SrvTCPTypeTagInterger = true
+		fmt.Println("this.SrvTCPTypeTagInterger")
+	}
+	if tcpmap & uint32(0x00000100) {
+		this.SrvTCPLargeFiles = true
+		fmt.Println("this.SrvTCPLargeFiles")
+	}
+	if tcpmap & uint32(0x00000400) {
+		this.SrvTCPObfuscation = true
+		fmt.Println("this.SrvTCPObfuscation")
+	}
+/*
+		// Server TCP flags
+#define SRV_TCPFLG_COMPRESSION          0x00000001
+#define SRV_TCPFLG_NEWTAGS                      0x00000008
+#define SRV_TCPFLG_UNICODE                      0x00000010
+#define SRV_TCPFLG_RELATEDSEARCH        0x00000040
+#define SRV_TCPFLG_TYPETAGINTEGER       0x00000080
+#define SRV_TCPFLG_LARGEFILES           0x00000100
+#define SRV_TCPFLG_TCPOBFUSCATION	0x00000400
+		*/
+
 }
 
 func (this *Client) AskServerList(){
