@@ -102,7 +102,7 @@ func (this *Client) ConnReader() {
 			return
 		}
 		fmt.Printf("Protocol 0x%x ",protocol)
-		handleServerMsg(protocol,buf,this.DeComp,this)
+		handleServerMsg(protocol,buf,this)
 	}
 	return
 }
