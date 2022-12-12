@@ -6,13 +6,13 @@ import (
 	libdeflate "github.com/4kills/go-libdeflate/v2" //libdeflate.Compressor
 )
 
-func handleServerMsg(protocol byte,buf []byte,dc libdeflate.Decompressor, client *Client){
+func handleServerMsg(protocol byte,buf []byte, client *Client){
     	//0xd4
 	switch protocol {
 		case 0xe3:
 			decodeE3(buf[0],buf[1:len(buf)],client)
 		case 0xd4:
-			decodeD4(buf[0],buf[1:len(buf)],dc,client)
+			decodeD4(buf[0],buf[1:len(buf)],client.DeComp,client)
 		default:
 			fmt.Println("ERROR: only std 0xE3 protocol supported")
 	}
