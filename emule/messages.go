@@ -89,6 +89,9 @@ func prcServerStatus(buf []byte){
 
 func prcIdChange(buf []byte, client *Client){
 	fmt.Println("ID change")
+	fmt.Println("ID change tcp flags schould contain support for large files indicator")
+	fmt.Printf("ID change len: %d",len(buf))
+	fmt.Println(", buf: ", buf)
 	clientid:=util.ByteToUint32(buf[0:4])
 	fmt.Println("Client id",clientid)
 	if len(buf) == 8 {
