@@ -114,7 +114,7 @@ func prcIdChange(buf []byte, client *Client){
 		tcpmap:=util.ByteToUint32(buf[4:8])
 		fmt.Printf("tcp map %b\n",tcpmap)
 		fmt.Printf("something(server port) %d\n",util.ByteToUint32(buf[8:12]),buf[8:12])
-		fmt.Printf("something 2(my ip) %d\n",util.ByteToUint32(buf[12:16]),buf[12:16]))
+		fmt.Printf("something 2(my ip) %d\n",util.ByteToUint32(buf[12:16]),buf[12:16])
 	}
 	client.AskServerList()
 	/*
