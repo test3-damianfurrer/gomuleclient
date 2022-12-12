@@ -3,31 +3,50 @@ package emule
 import (
 	"fmt"
 	util "github.com/AltTechTools/gomule-tst/emule"
+	libdeflate "github.com/4kills/go-libdeflate/v2" //libdeflate.Compressor
 )
 
-func handleServerMsg(protocol byte,buf []byte){
-    bufsize := len(buf)
-	if protocol == 0xe3 {
-        switch buf[0] {
+func handleServerMsg(protocol byte,buf []byte,dc libdeflate.Decompressor){
+    	//0xd4
+	switch protocol {
+		case 0xe3:
+			decodeE3(buf[0],buf[1:len(buf)])
+		case 0xd4:
+			decodeD4(buf[0],buf[1:len(buf)],dc)
+		default:
+			fmt.Println("ERROR: only std 0xE3 protocol supported")
+	}
+}
+
+func decodeD4(btype byte,buf []byte,dc libdeflate.Decompressor){
+	fmt.Printf("DEBUG: 0xd4 type 0x%x\n",btype)
+	blen, decompressed, err := dc.Decompress(buf, nil, 1)
+	if err != nil {
+		fmt.Println("ERROR: failed to decompress buffer",err)
+		return
+	}
+	fmt.Println("DEBUG: decompressed length:",blen)
+	fmt.Println("DEBUG: decompressed",decompressed[0:30])
+	decodeE3(btype,decompressed)
+}
+
+func decodeE3(btype byte,buf []byte){
+	switch btype {
 			case 0x38:
-				prcServerTextMsg(buf[1:bufsize])
+				prcServerTextMsg(buf)
 			case 0x40:
-				prcIdChange(buf[1:bufsize])
+				prcIdChange(buf)
 			case 0x34:
-				prcServerStatus(buf[1:bufsize])
+				prcServerStatus(buf)
 			case 0x41:
-				prcServerIdentification(buf[1:bufsize])
+				prcServerIdentification(buf)
             default:
-            	fmt.Printf("ERROR: Msg type 0x%x not supported\n",buf[0])
+            	fmt.Printf("ERROR: Msg type 0x%x not supported\n",btype)
         }
-    } else {
-        //decode
-        fmt.Println("ERROR: only std 0xE3 protocol supported")
-    }
 }
 
 func prcServerIdentification(buf []byte){
-	fmt.Printf("Server Identification")
+	fmt.Println("Server Identification")
 	serveruuid:=buf[0:16]
 	serverip:=util.ByteToUint32(buf[16:20])
 	serverport:=util.ByteToUint16(buf[20:24])
@@ -50,7 +69,7 @@ func prcServerIdentification(buf []byte){
 }
 
 func prcServerStatus(buf []byte){
-	fmt.Printf("Server Status")
+	fmt.Println("Server Status")
 	usercount:=util.ByteToUint32(buf[0:4])
 	filecount:=util.ByteToUint32(buf[4:8])
 	fmt.Println("Server Users",usercount)
@@ -58,7 +77,7 @@ func prcServerStatus(buf []byte){
 }
 
 func prcIdChange(buf []byte){
-	fmt.Printf("ID change")
+	fmt.Println("ID change")
 	clientid:=util.ByteToUint32(buf[0:4])
 	fmt.Println("Client id",clientid)
 	if len(buf) == 8 {
@@ -68,7 +87,7 @@ func prcIdChange(buf []byte){
 }
 
 func prcServerTextMsg(buf []byte){
-	fmt.Printf("Server Message")
+	fmt.Println("Server Message")
 	msglen := util.ByteToUint16(buf[0:2])
 	fmt.Printf("String: \n%s\n",buf[2:msglen+2])
 	//util.readString(0,buf)
