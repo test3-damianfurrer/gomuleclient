@@ -46,31 +46,31 @@ func (this *Client) SetTCPFlags(tcpmap uint32){
 	this.SrvTCPLargeFiles 		= false
 	this.SrvTCPObfuscation 		= false
 	
-	if tcpmap & uint32(0x00000001) {
+	if tcpmap & uint32(0x00000001) != 0 {
 		this.SrvTCPCompression = true
 		fmt.Println("this.SrvTCPCompression")
 	}
-	if tcpmap & uint32(0x00000008) {
+	if tcpmap & uint32(0x00000008) != 0 {
 		this.SrvTCPNewTags = true
 		fmt.Println("this.SrvTCPNewTags")
 	}
-	if tcpmap & uint32(0x00000010) {
+	if tcpmap & uint32(0x00000010) != 0 {
 		this.SrvTCPUnicode = true
 		fmt.Println("this.SrvTCPUnicode")
 	}
-	if tcpmap & uint32(0x00000040) {
+	if tcpmap & uint32(0x00000040) != 0{
 		this.SrvTCPRelatedSearch = true
 		fmt.Println("this.SrvTCPRelatedSearch")
 	}
-	if tcpmap & uint32(0x00000080) {
+	if tcpmap & uint32(0x00000080) != 0 {
 		this.SrvTCPTypeTagInterger = true
 		fmt.Println("this.SrvTCPTypeTagInterger")
 	}
-	if tcpmap & uint32(0x00000100) {
+	if tcpmap & uint32(0x00000100) != 0 {
 		this.SrvTCPLargeFiles = true
 		fmt.Println("this.SrvTCPLargeFiles")
 	}
-	if tcpmap & uint32(0x00000400) {
+	if tcpmap & uint32(0x00000400) != 0 {
 		this.SrvTCPObfuscation = true
 		fmt.Println("this.SrvTCPObfuscation")
 	}
