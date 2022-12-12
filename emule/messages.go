@@ -107,6 +107,7 @@ func prcIdChange(buf []byte, client *Client){
 #define SRV_TCPFLG_LARGEFILES           0x00000100
 #define SRV_TCPFLG_TCPOBFUSCATION	0x00000400
 		*/
+		client.SetTCPFlags(tcpmap)
 		
 	}
 	if len(buf) == 16 {
