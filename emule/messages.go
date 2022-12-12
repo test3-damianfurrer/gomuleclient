@@ -97,16 +97,6 @@ func prcIdChange(buf []byte, client *Client){
 	if len(buf) == 8 {
 		tcpmap:=util.ByteToUint32(buf[4:8])
 		fmt.Printf("tcp map %b\n",tcpmap)
-		/*
-		// Server TCP flags
-#define SRV_TCPFLG_COMPRESSION          0x00000001
-#define SRV_TCPFLG_NEWTAGS                      0x00000008
-#define SRV_TCPFLG_UNICODE                      0x00000010
-#define SRV_TCPFLG_RELATEDSEARCH        0x00000040
-#define SRV_TCPFLG_TYPETAGINTEGER       0x00000080
-#define SRV_TCPFLG_LARGEFILES           0x00000100
-#define SRV_TCPFLG_TCPOBFUSCATION	0x00000400
-		*/
 		client.SetTCPFlags(tcpmap)
 		
 	}
