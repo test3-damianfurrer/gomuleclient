@@ -6,13 +6,13 @@ import (
 	libdeflate "github.com/4kills/go-libdeflate/v2" //libdeflate.Compressor
 )
 
-func handleServerMsg(protocol byte,buf []byte,dc libdeflate.Decompressor, client *Client){
+func handleServerMsg(protocol byte,buf []byte, client *Client){
     	//0xd4
 	switch protocol {
 		case 0xe3:
 			decodeE3(buf[0],buf[1:len(buf)],client)
 		case 0xd4:
-			decodeD4(buf[0],buf[1:len(buf)],dc,client)
+			decodeD4(buf[0],buf[1:len(buf)],client.DeComp,client)
 		default:
 			fmt.Println("ERROR: only std 0xE3 protocol supported")
 	}
@@ -27,7 +27,7 @@ func decodeD4(btype byte,buf []byte,dc libdeflate.Decompressor, client *Client){
 	}
 	fmt.Println("DEBUG: decompressed length:",blen)
 	fmt.Println("DEBUG: decompressed",decompressed[0:30])
-	decodeE3(btype,decompressed)
+	decodeE3(btype,decompressed,client)
 }
 
 func decodeE3(btype byte,buf []byte, client *Client){
@@ -95,11 +95,14 @@ func prcIdChange(buf []byte, client *Client){
 		tcpmap:=util.ByteToUint32(buf[4:8])
 		fmt.Printf("tcp map %b\n",tcpmap)
 	}
+	client.AskServerList()
+	/*
 	//test ask for serverlist
 	//client.Conn
 	size_b:=util.UInt32ToByte(uint32(1))
-	data := [6]byte{0xe3,size_b[0],size_b[1],size_b[2],size_b[3],0x14}
+	data := []byte{0xe3,size_b[0],size_b[1],size_b[2],size_b[3],0x14}
 	client.ClientConn.Write(data)
+	*/
 }
 
 func prcServerTextMsg(buf []byte){

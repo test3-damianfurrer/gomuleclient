@@ -31,6 +31,14 @@ func NewClientConn(server string, port int, debug bool) *Client {
 		Debug:   debug}
 }
 
+func (this *Client) AskServerList(){
+	//test ask for serverlist
+	//client.Conn
+	size_b:=util.UInt32ToByte(uint32(1))
+	data := []byte{0xe3,size_b[0],size_b[1],size_b[2],size_b[3],0x14}
+	this.ClientConn.Write(data)
+}
+
 func (this *Client) read(conn net.Conn) (buf []byte, protocol byte, err error) {
 	buf = make([]byte, 5)
 	n, err := conn.Read(buf)
@@ -94,7 +102,7 @@ func (this *Client) ConnReader() {
 			return
 		}
 		fmt.Printf("Protocol 0x%x ",protocol)
-		handleServerMsg(protocol,buf,this.DeComp,this)
+		handleServerMsg(protocol,buf,this)
 	}
 	return
 }
