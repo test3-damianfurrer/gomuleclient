@@ -98,6 +98,12 @@ func prcIdChange(buf []byte, client *Client){
 		tcpmap:=util.ByteToUint32(buf[4:8])
 		fmt.Printf("tcp map %b\n",tcpmap)
 	}
+	if len(buf) == 16 {
+		tcpmap:=util.ByteToUint32(buf[4:8])
+		fmt.Printf("tcp map %b\n",tcpmap)
+		fmt.Printf("something %d\n",util.ByteToUint32(buf[8:12]))
+		fmt.Printf("something 2 %d\n",util.ByteToUint32(buf[12:16]))
+	}
 	client.AskServerList()
 	/*
 	//test ask for serverlist
