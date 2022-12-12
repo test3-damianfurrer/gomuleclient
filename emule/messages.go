@@ -89,11 +89,25 @@ func prcServerStatus(buf []byte){
 
 func prcIdChange(buf []byte, client *Client){
 	fmt.Println("ID change")
+	fmt.Println("ID change tcp flags schould contain support for large files indicator")
+	fmt.Printf("ID change len: %d",len(buf))
+	fmt.Println(", buf: ", buf)
 	clientid:=util.ByteToUint32(buf[0:4])
 	fmt.Println("Client id",clientid)
 	if len(buf) == 8 {
 		tcpmap:=util.ByteToUint32(buf[4:8])
 		fmt.Printf("tcp map %b\n",tcpmap)
+		client.SetTCPFlags(tcpmap)
+		
+	}
+	if len(buf) == 16 {
+		tcpmap:=util.ByteToUint32(buf[4:8])
+		fmt.Printf("tcp map %b\n",tcpmap)
+		client.SetTCPFlags(tcpmap)
+		fmt.Printf("something(server port) %d",util.ByteToUint32(buf[8:12]))
+		fmt.Println(" ",buf[8:12])
+		fmt.Printf("something 2(my ip) %d\n",util.ByteToUint32(buf[12:16]))
+		fmt.Println(" ",buf[12:16])
 	}
 	client.AskServerList()
 	/*
