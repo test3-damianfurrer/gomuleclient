@@ -50,8 +50,8 @@ func decodeE3(btype byte,buf []byte, client *Client){
 func prcServerList(buf []byte){
 	offset := 1
 	for i := byte(0); i < buf[0]; i++ {
-		fmt.Printf("Server ip: %d.%d.%d.%d:",buf[offset++],buf[offset++],buf[offset++],buf[offset++])
-		offset+=2
+		fmt.Printf("Server ip: %d.%d.%d.%d:",buf[offset],buf[offset+1],buf[offset+2],buf[offset+3])
+		offset+=6
 		fmt.Printf("%d\n",util.ByteToUint16(buf[offset-2:offset]))
 	}
 }
