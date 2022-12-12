@@ -95,11 +95,14 @@ func prcIdChange(buf []byte, client *Client){
 		tcpmap:=util.ByteToUint32(buf[4:8])
 		fmt.Printf("tcp map %b\n",tcpmap)
 	}
+	client.AskServerList()
+	/*
 	//test ask for serverlist
 	//client.Conn
 	size_b:=util.UInt32ToByte(uint32(1))
 	data := []byte{0xe3,size_b[0],size_b[1],size_b[2],size_b[3],0x14}
 	client.ClientConn.Write(data)
+	*/
 }
 
 func prcServerTextMsg(buf []byte){
