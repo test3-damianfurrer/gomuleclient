@@ -27,7 +27,7 @@ func decodeD4(btype byte,buf []byte,dc libdeflate.Decompressor, client *Client){
 	}
 	fmt.Println("DEBUG: decompressed length:",blen)
 	fmt.Println("DEBUG: decompressed",decompressed[0:30])
-	decodeE3(btype,decompressed)
+	decodeE3(btype,decompressed,client)
 }
 
 func decodeE3(btype byte,buf []byte, client *Client){
@@ -98,7 +98,7 @@ func prcIdChange(buf []byte, client *Client){
 	//test ask for serverlist
 	//client.Conn
 	size_b:=util.UInt32ToByte(uint32(1))
-	data := [6]byte{0xe3,size_b[0],size_b[1],size_b[2],size_b[3],0x14}
+	data := []byte{0xe3,size_b[0],size_b[1],size_b[2],size_b[3],0x14}
 	client.ClientConn.Write(data)
 }
 
