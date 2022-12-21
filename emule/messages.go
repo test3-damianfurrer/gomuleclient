@@ -79,8 +79,26 @@ func prcOneSearchResult(pos int, buf []byte) (readb int){
 					//break
 					forbreak=true
 				}
-			//case 131:
-			//case 137:
+			case 131:
+				if buf[readb+1] == 2 {
+					fmt.Println("Debug: unknown tagging: ",buf[readb:readb+2])
+					readb+=2
+					fmt.Println("Debug: unknown value: ",buf[readb:readb+4])
+					readb+=4
+				} else {
+					//break
+					forbreak=true
+				}
+			case 137:
+				if buf[readb+1] == 21 {
+					fmt.Println("Debug: unknown tagging: ",buf[readb:readb+2])
+					readb+=2
+					fmt.Println("Debug: unknown value: ",buf[readb:readb+4])
+					readb+=4
+				} else {
+					//break
+					forbreak=true
+				}
 			default:
 				forbreak=true //break
 		}
@@ -124,7 +142,7 @@ func prcSearchResults(buf []byte){
 	
 	prcread := prcOneSearchResult(4,buf)
 	fmt.Println("Debug: prcread",prcread)
-	fmt.Println("Debug: should be",34+strlen-4)
+	fmt.Println("Debug: (maybe + 12)should be",34+strlen-4)
 	
 	
 	fmt.Printf("Debug: second hash: 0x%x \n",buf[iend:iend+16])
