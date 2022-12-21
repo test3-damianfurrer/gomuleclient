@@ -70,7 +70,7 @@ func prcOneSearchResult(pos int, buf []byte) (readb int){
 				if buf[readb+1] == 118 && buf[readb+2] == 105 && buf[readb+3] == 100 { //118 105 100 == vid
 					fmt.Println("Debug: vid tagging: ",buf[readb:readb+4])
 					readb+=4
-					fmt.Println("Debug: unknown value: ",buf[readb:readb+4])
+					fmt.Println("Debug: unknown value: ",buf[readb:readb+4],util.ByteToUint32(buf[readb:readb+4]))
 					readb+=4
 				} else {
 					//break
@@ -94,7 +94,7 @@ func prcOneSearchResult(pos int, buf []byte) (readb int){
 				if buf[readb+1] == 2 {
 					fmt.Println("Debug: unknown tagging: ",buf[readb:readb+2])
 					readb+=2
-					fmt.Println("Debug: unknown value: ",buf[readb:readb+4])
+					fmt.Println("Debug: unknown value: ",buf[readb:readb+4],util.ByteToUint32(buf[readb:readb+4]))
 					readb+=4
 				} else {
 					//break
@@ -104,7 +104,7 @@ func prcOneSearchResult(pos int, buf []byte) (readb int){
 				if buf[readb+1] == 212 {
 					fmt.Println("Debug: unknown tagging: ",buf[readb:readb+2])
 					readb+=2
-					fmt.Println("Debug: unknown value: ",buf[readb:readb+4])
+					fmt.Println("Debug: unknown value: ",buf[readb:readb+4],util.ByteToUint32(buf[readb:readb+4]))
 					readb+=4
 				} else {
 					//break
@@ -114,7 +114,7 @@ func prcOneSearchResult(pos int, buf []byte) (readb int){
 				if buf[readb+1] == 21 {
 					fmt.Println("Debug: unknown tagging: ",buf[readb:readb+2])
 					readb+=2
-					fmt.Println("Debug: unknown value: ",buf[readb:readb+4])
+					fmt.Println("Debug: unknown value: ",buf[readb:readb+4],util.ByteToUint32(buf[readb:readb+4]))
 					readb+=4
 				} else {
 					//break
@@ -143,6 +143,13 @@ func prcOneSearchResult(pos int, buf []byte) (readb int){
 func prcSearchResults(buf []byte){
 	rescount := util.ByteToUint32(buf[0:4])
 	fmt.Println("Debug: search rescount: ",rescount)
+	
+	prcread := 0
+	for int i := 0; i<5; i++ {
+		prcread += prcOneSearchResult(4+prcread,buf)
+		fmt.Println("Debug: prcread",prcread)
+	}
+	fmt.Println("Debug: after:"i,buf[4+prcread:4+prcread+100])
 	//firstHash := util.ByteToUint32(buf[4:20])
 	/*
 	fmt.Printf("Debug: first hash: 0x%x \n",buf[4:20])
@@ -160,7 +167,7 @@ func prcSearchResults(buf []byte){
 	fmt.Println("Debug: skipped: ",buf[34+strlen+6:34+strlen+8])
 	iend:=34+strlen+12
 	fmt.Println("Debug: skipped val: ",buf[34+strlen+8:iend])
-	*/
+	
 	prcread := 0
 	prcread += prcOneSearchResult(4+prcread,buf)
 	fmt.Println("Debug: prcread",prcread)
@@ -171,7 +178,7 @@ func prcSearchResults(buf []byte){
 	prcread += prcOneSearchResult(4+prcread,buf)
 	fmt.Println("Debug: prcread",prcread)
 	fmt.Println("Debug: after 3:",buf[4+prcread:4+prcread+100])
-	/*
+	
 	fmt.Printf("Debug: second hash: 0x%x \n",buf[iend:iend+16])
 	fmt.Println("Debug: second ip: ",buf[iend+16:iend+20])
 	fmt.Println("Debug: second port: ",buf[iend+20:iend+22])
