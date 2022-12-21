@@ -296,8 +296,32 @@ func prcOneSearchResult(pos int, buf []byte) (readb int, fname_b []byte, hash_b 
 								fname_b=buf[readb:readb+strlen]
 								fmt.Println("DEBUG: strbuf:",fname_b)
 								readb+=strlen
+							default:
+								forbreak=true
 						}
+					default:
+						forbreak=true
 				}
+			case 3: //int
+				readb+=1
+				tnsize:=int(util.ByteToUint16(buf[readb:readb+2]))
+				readb+=2
+				tname:=buf[readb:readb+tnsize]
+				readb+=tnsize
+				switch len(tname) {
+					case 1:
+						switch tname[0] {
+							case 2: //file size
+								fmt.Println("DEBUG: filesize:",buf[readb:readb+4])
+								readb+=4
+							default:
+								forbreak=true
+						}
+					default:
+						forbreak=true
+				}
+			default:
+				forbreak=true
 		}
 		if forbreak {
 			break
