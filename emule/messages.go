@@ -416,13 +416,13 @@ func prcOneSearchResult(pos int, buf []byte) (readb int, fname_b []byte, hash_b 
 
 
 func prcSearchResults(buf []byte){
-	rescount := util.ByteToUint32(buf[0:4])
+	rescount := int(util.ByteToUint32(buf[0:4]))
 	fmt.Println("Debug: search rescount: ",rescount)
 	
 	prcread := 0
 	i := 0
 	bread2 := 0
-	for i = 0; i<100; i++ {
+	for i = 0; i<rescount; i++ {
 		//prcread += prcOneSearchResult(4+prcread,buf)
 		bread, fname_b, hash_b := prcOneSearchResult(4+prcread,buf)
 		if (len(fname_b)==0){
