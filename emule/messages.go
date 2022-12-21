@@ -49,7 +49,7 @@ func decodeE3(btype byte,buf []byte, client *Client){
         }
 }
 
-func prcOneSearchResult(pos int, buf []byte) (readb int, fname_b []byte, hash_b []byte){
+func prcOneSearchResultObfuscated(pos int, buf []byte) (readb int, fname_b []byte, hash_b []byte){
 	readb=pos
 	hash_b=buf[readb:readb+16]
 	fmt.Printf("Debug: hash: 0x%x \n",hash_b)
@@ -262,6 +262,51 @@ func prcOneSearchResult(pos int, buf []byte) (readb int, fname_b []byte, hash_b 
 	readb-=pos
 	return
 }
+
+func prcOneSearchResult(pos int, buf []byte) (readb int, fname_b []byte, hash_b []byte){
+	readb=pos
+	hash_b=buf[readb:readb+16]
+	fmt.Printf("Debug: hash: 0x%x \n",hash_b)
+	readb+=16
+	fmt.Println("Debug: peer ip: ",buf[readb:readb+4])
+	readb+=4
+	fmt.Println("Debug: peer port: ",buf[readb:readb+2])
+	readb+=2
+	tagcount:=util.ByteToUint32(buf[readb:readb+4])
+	fmt.Println("Debug: tag count: ",buf[readb:readb+4],tagcount)
+	readb+=4
+	//tag count is wrong man break.
+	forbreak:=false
+	for {
+		fmt.Println("Debug: tag indicator", buf[readb])
+		fmt.Println("Debug: tag indicator++", buf[readb:readb+10])
+		switch buf[readb] { //type
+			case 2: //string
+				readb+=1
+				tnsize:=util.ByteToUint16(buf[readb:readb+2])
+				readb+=2
+				tname:=buf[readb:readb+tnsize]
+				readb+=tnsize
+				switch tname {
+					case 1: //file name
+						strlen:=int(util.ByteToUint16(buf[readb:readb+2]))
+						readb+=2
+						fname_b=buf[readb:readb+strlen]
+						fmt.Println("DEBUG: strbuf:"fname_b)
+						readb+=strlen
+						
+				}
+		}
+		if forbreak {
+			break
+		}
+	}
+	
+	readb-=pos
+	return
+}
+
+
 
 func prcSearchResults(buf []byte){
 	rescount := util.ByteToUint32(buf[0:4])
