@@ -151,8 +151,8 @@ func prcSearchResults(buf []byte){
 	fmt.Println("Debug: second tag count: ",buf[iend+22:iend+26])
 	
 	fmt.Println("Debug: skipped: ",buf[iend+26:iend+28])
-	strlen2 := util.ByteToUint16(buf[iend+28:iend+30])
-	fmt.Println("Debug: strlen2",strlen)
+	strlen2 := int(util.ByteToUint16(buf[iend+28:iend+30]))
+	fmt.Println("Debug: strlen2",strlen2)
 	fmt.Println("Debug: str2",buf[iend+30:iend+30+strlen2])
 	fmt.Println("Debug:second after: ",buf[iend+30+strlen2:iend+30+strlen2+100])
 	//248 1 0 0 -> 504 results
