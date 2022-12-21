@@ -58,7 +58,12 @@ func prcSearchResults(buf []byte){
 	fmt.Println("Debug: peer ip: ",buf[20:24])
 	fmt.Println("Debug: peer port: ",buf[24:26])
 	fmt.Println("Debug: tag count: ",buf[26:30],util.ByteToUint32(buf[26:30]))
-	fmt.Println("Debug: after: ",buf[30:60])
+	//fmt.Println("Debug: after: ",buf[30:60])
+	fmt.Println("Debug: skipped: ",buf[30:32])
+	strlen := util.ByteToUint16(buf[32:34])
+	fmt.Println("Debug: strlen",strlen)
+	fmt.Println("Debug: str",buf[34:34+strlen])
+	fmt.Println("Debug: after str",buf[34+strlen:34+strlen+30])
 	
 }
 
