@@ -225,6 +225,9 @@ func prcSearchResults(buf []byte){
 		bread, fname_b, hash_b := prcOneSearchResult(4+prcread,buf)
 		if (len(fname_b)==0){
 			fmt.Println("Error: couldn't parse result file name: ",buf[4+prcread-bread2:4+prcread+bread+100])
+			fmt.Println("     prev:",buf[4+prcread-bread2:4+prcread])
+			fmt.Println("     curr:",buf[4+prcread:4+prcread+bread])
+			fmt.Println("     +100:",buf[4+prcread+bread:4+prcread+bread+100])
 			break
 		}
 		bread2=bread
