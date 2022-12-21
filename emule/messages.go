@@ -161,10 +161,11 @@ func prcSearchResults(buf []byte){
 	iend:=34+strlen+12
 	fmt.Println("Debug: skipped val: ",buf[34+strlen+8:iend])
 	*/
-	prcread := prcOneSearchResult(4,buf)
+	prcread := 0
+	prcread += prcOneSearchResult(4+prcread,buf)
 	fmt.Println("Debug: prcread",prcread)
 	//fmt.Println("Debug: (maybe + 12)should be",34+strlen-4)
-	iend:=4+prcread
+	//iend:=4+prcread
 	prcread += prcOneSearchResult(4+prcread,buf)
 	fmt.Println("Debug: prcread",prcread)
 	prcread += prcOneSearchResult(4+prcread,buf)
