@@ -145,11 +145,12 @@ func prcSearchResults(buf []byte){
 	fmt.Println("Debug: search rescount: ",rescount)
 	
 	prcread := 0
-	for int i := 0; i<5; i++ {
+	i := 0
+	for i = 0; i<5; i++ {
 		prcread += prcOneSearchResult(4+prcread,buf)
 		fmt.Println("Debug: prcread",prcread)
 	}
-	fmt.Println("Debug: after:"i,buf[4+prcread:4+prcread+100])
+	fmt.Println("Debug: after:",i,buf[4+prcread:4+prcread+100])
 	//firstHash := util.ByteToUint32(buf[4:20])
 	/*
 	fmt.Printf("Debug: first hash: 0x%x \n",buf[4:20])
