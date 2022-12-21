@@ -366,6 +366,9 @@ func prcOneSearchResult(pos int, buf []byte) (readb int, fname_b []byte, hash_b 
 							case 48: //0x30 unknown //often low value
 								fmt.Println("DEBUG: unknown 48/0x30:",buf[readb:readb+4])
 								readb+=4
+							case 247: //0xf7 unknown //often low value
+								fmt.Println("DEBUG: unknown 247/0xF7:",buf[readb:readb+4])
+								readb+=4
 							default:
 								forbreak=true
 						}
