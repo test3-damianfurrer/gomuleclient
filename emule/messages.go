@@ -440,6 +440,7 @@ func prcSearchResults(buf []byte){
 		fmt.Println("Debug: prcread",prcread)
 		fmt.Printf("\n0x%x|%s\n\n",hash_b,fname_b)
 	}
+	fmt.Println("Debug: orig. rescount:",rescount)
 	fmt.Println("Debug: after:",i,buf[4+prcread:4+prcread+100])
 	//firstHash := util.ByteToUint32(buf[4:20])
 	/*
