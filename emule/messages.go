@@ -147,13 +147,13 @@ func prcOneSearchResult(pos int, buf []byte) (readb int){
 				}
 			case 157:
 				if buf[readb+1] == 1 {
-					readb+=2
+					readb+=1
 					bufstr:=make([]byte,0)
 					for  {
-						if buf[readb+1] == 131 {
+						readb+=1
+						if buf[readb] == 131 {
 							break
 						}
-						readb+=1
 						bufstr=append(bufstr,buf[readb])
 					}
 					fmt.Println("(obfuscated?)name buf:",bufstr)
