@@ -72,7 +72,7 @@ func prcOneSearchResult(pos int, buf []byte) (readb int){
 		fmt.Println("Debug: tag indicator++", buf[readb:readb+5])
 		switch buf[readb] {
 			case 100:
-				switch buf[readb+1] == 105 {
+				switch buf[readb+1] {
 					case 105:
 						fmt.Println("Debug: some tagging/value: ",buf[readb:readb+4])
 						readb+=4 //idk, what this should be
