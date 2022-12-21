@@ -80,7 +80,55 @@ func prcSearchResults(buf []byte){
 	fmt.Println("Debug: strlen2",strlen)
 	fmt.Println("Debug: str2",buf[iend+30:iend+30+strlen2])
 	fmt.Println("Debug:second after: ",buf[iend+30+strlen2:iend+30+strlen2+100])
+	//248 1 0 0 -> 504 results
 	
+	// [201 184 52 216 95 73 187 94 17 15 11 174 35 74 120 95] 
+	// [50 53 142 41]
+	// [70 57]
+	//4 0 0 0  - tag count 
+	//130 1 - fname tag indicator
+	// --- Linux.Magazine.164.Jul.2014--Cygwin, UEFI Secure Boot, HDD to SSD, Bitwig Studio, Bash History, Oculus Rift VR.pdf
+	//131 2 28 136 91 1 137 21 7 137 48 7 
+	//94 20 60 87 136 226 150 127 40 123 187 107 79 243 48 29
+	//151 83 189 58
+	//229 6 
+	//7 0 0 0 130 1 
+	// --- Tae Bo - Billys' Boot Camp - Basic Training - cd 1 - (Billy Blanks) - [ENG].avi
+	//131 2 0 66 227 43
+	//137 21 1 137 48 1 
+	//136 212 1 14 148 213 120 118 105 100 136 211 102 6 
+	//40 240 189 252 88 72 242 10 172 142 231 225 73 69 107 219 
+	//93 186 255 106 
+	//54 18 
+	//4 0 0 0 130 1
+	//Flavors of Puglia. Traditional recipes from.... 
+	
+	//hashs:
+	//201 184 52 216 95 73 187 94 17 15 11 174 35 74 120 95
+	//94 20 60 87 136 226 150 127 40 123 187 107 79 243 48 29
+	//40 240 189 252 88 72 242 10 172 142 231 225 73 69 107 219
+	
+	//ips:
+	//50 53 142 41
+ 	//151 83 189 58
+	//93 186 255 106 
+	
+	//ports:
+	//70 57
+	//229 6
+	//54 18
+	
+	//tag counts: (might be intentionally wrong?)
+	//4 0 0 0
+	//7 0 0 0
+	//4 0 0 0
+	
+	//tags
+	//131 2 + 4bytes
+	//137 21 + 4bytes
+	
+	//136 212 + 4bytes
+	//120 118 105 100 + 4bytes (string tag name "vid")
 }
 
 func prcServerList(buf []byte){
