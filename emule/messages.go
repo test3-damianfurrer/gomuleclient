@@ -124,6 +124,12 @@ func prcOneSearchResult(pos int, buf []byte) (readb int){
 					//break
 					forbreak=true
 				}
+			case 139:
+				if buf[readb+1] == 1 {
+					readb+=2 //idk, what this should be
+				} else {
+					forbreak=true
+				}
 			case 213:
 				readb+=1 //idk, what this should be
 			default:
