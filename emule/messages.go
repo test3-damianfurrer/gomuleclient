@@ -49,9 +49,10 @@ func decodeE3(btype byte,buf []byte, client *Client){
         }
 }
 
-func prcOneSearchResult(pos int, buf []byte) (readb int){
+func prcOneSearchResult(pos int, buf []byte) (readb int, fname_b []byte, hash_b []byte){
 	readb=pos
-	fmt.Printf("Debug: hash: 0x%x \n",buf[readb:readb+16])
+	hash_b=buf[readb:readb+16]
+	fmt.Printf("Debug: hash: 0x%x \n",hash_b)
 	readb+=16
 	fmt.Println("Debug: peer ip: ",buf[readb:readb+4])
 	readb+=4
@@ -107,7 +108,8 @@ func prcOneSearchResult(pos int, buf []byte) (readb int){
 					readb+=2
 					fmt.Println("Debug: strlen",strlen)
 					fmt.Println("Debug: str",buf[readb:readb+int(strlen)])
-					fmt.Printf("Debug: str: %s\n",buf[readb:readb+int(strlen)])
+					fname_b=buf[readb:readb+int(strlen)]
+					fmt.Printf("Debug: str: %s\n",fname_b)
 					readb+=int(strlen)
 				} else {
 					//break
@@ -169,6 +171,7 @@ func prcOneSearchResult(pos int, buf []byte) (readb int){
 					}
 					fmt.Println("(obfuscated?)name buf:",bufstr)
 					fmt.Printf("(obfuscated?)name buf:%s\n",bufstr)
+					fname_b=bufstr
 				} else {
 					forbreak=true
 				}
@@ -215,8 +218,15 @@ func prcSearchResults(buf []byte){
 	prcread := 0
 	i := 0
 	for i = 0; i<20; i++ {
-		prcread += prcOneSearchResult(4+prcread,buf)
+		//prcread += prcOneSearchResult(4+prcread,buf)
+		bread, fname_b, hash_b := prcOneSearchResult(4+prcread,buf)
+		if (len(fname_b)==0){
+			fmt.Println("Error: couldn't parse result file name: ",buf[4+prcread:4+prcread+bread+100])
+			break
+		}
+		prcread += bread
 		fmt.Println("Debug: prcread",prcread)
+		fmt.Printf("\n0x%x|%s\n\n",hash_b,fname_b)
 	}
 	fmt.Println("Debug: after:",i,buf[4+prcread:4+prcread+100])
 	//firstHash := util.ByteToUint32(buf[4:20])
