@@ -370,6 +370,9 @@ func prcOneSearchResult(pos int, buf []byte) (readb int, fname_b []byte, hash_b 
 							case 2: //file size
 								fmt.Println("DEBUG: filesize:",buf[readb:readb+4])
 								readb+=4
+							case 5:
+								fmt.Println("DEBUG: unknown 0x05:",buf[readb:readb+4])
+								readb+=4
 							case 21:
 								fmt.Println("DEBUG: sources:",buf[readb:readb+4])
 								readb+=4
