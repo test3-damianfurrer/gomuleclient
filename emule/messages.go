@@ -126,7 +126,7 @@ func prcOneSearchResult(pos int, buf []byte) (readb int, fname_b []byte, hash_b 
 					forbreak=true
 				}
 			case 132:
-				if buf[readb+1] == 3 {
+				if buf[readb+1] == 3 && buf[readb+2] != 67 { //132 3 67 74 (part of hash)
 					//bs?
 					fmt.Println("Debug: unknown tag/value: ",buf[readb:readb+4])
 					readb+=4
