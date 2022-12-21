@@ -150,6 +150,9 @@ func prcOneSearchResult(pos int, buf []byte) (readb int, fname_b []byte, hash_b 
 							//	fmt.Println("Debug: unknown tag/value: ",buf[readb:readb+4])
 							//	readb+=4
 							//136 212 52 4 148 213
+							case 64:
+								fmt.Println("Debug: unknown tag/value: ",buf[readb:readb+4])
+								readb+=4
 							default:
 						
 					///*
