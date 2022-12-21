@@ -74,7 +74,12 @@ func prcSearchResults(buf []byte){
 	fmt.Println("Debug: second ip: ",buf[iend+16:iend+20])
 	fmt.Println("Debug: second port: ",buf[iend+20:iend+22])
 	fmt.Println("Debug: second tag count: ",buf[iend+22:iend+26])
-	fmt.Println("Debug:second after: ",buf[iend+26:iend+26+100])
+	
+	fmt.Println("Debug: skipped: ",buf[iend+26:iend+28])
+	strlen2 := util.ByteToUint16(buf[iend+28:iend+30])
+	fmt.Println("Debug: strlen2",strlen)
+	fmt.Println("Debug: str2",buf[iend+30:iend+30+strlen2])
+	fmt.Println("Debug:second after: ",buf[iend+30+strlen2:iend+30+strlen2+100])
 	
 }
 
