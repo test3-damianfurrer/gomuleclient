@@ -95,6 +95,15 @@ func (this *Client) AskServerList(){
 	this.ClientConn.Write(data)
 }
 
+func (this *Client) SearchServer(){
+	//test ask for serverlist
+	//client.Conn
+	time.Sleep(10*time.Second) //wait a little
+	size_b:=util.UInt32ToByte(uint32(8))
+	data := []byte{0xe3,size_b[0],size_b[1],size_b[2],size_b[3],0x16,1,4,0,66,111,111,116}
+	this.ClientConn.Write(data)
+}
+
 func (this *Client) read(conn net.Conn) (buf []byte, protocol byte, err error) {
 	buf = make([]byte, 5)
 	n, err := conn.Read(buf)
@@ -198,7 +207,7 @@ func (this *Client) Connect() {
 	fmt.Println("Size body", len(body))
 	data := util.EncodeByteMsg(0xE3,0x01,body)
 	this.ClientConn.Write(data)
-	time.Sleep(10*time.Second)
+	time.Sleep(2*time.Second)
 	this.ConnReader() //reads all incoming data
 	return
 }
