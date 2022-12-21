@@ -49,7 +49,7 @@ func decodeE3(btype byte,buf []byte, client *Client){
         }
 }
 
-func prcOneSearchResult(pos int, *buf []byte) (readb int){
+func prcOneSearchResult(pos int, buf *[]byte) (readb int){
 	readb=pos
 	fmt.Printf("Debug: hash: 0x%x \n",*buf[readb:readb+16])
 	readb+=16
