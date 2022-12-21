@@ -68,6 +68,8 @@ func prcOneSearchResult(pos int, buf []byte) (readb int){
 	readb+=int(strlen)
 	fmt.Println("Debug: tag indicator", buf[readb])
 	fmt.Println("Debug: tag indicator++", buf[readb:readb+5])
+	readb-=pos
+	return
 }
 
 func prcSearchResults(buf []byte){
