@@ -63,7 +63,18 @@ func prcSearchResults(buf []byte){
 	strlen := util.ByteToUint16(buf[32:34])
 	fmt.Println("Debug: strlen",strlen)
 	fmt.Println("Debug: str",buf[34:34+strlen])
-	fmt.Println("Debug: after str",buf[34+strlen:34+strlen+120])
+	///fmt.Println("Debug: after str",buf[34+strlen:34+strlen+120])
+	fmt.Println("Debug: skipped: ",buf[34+strlen:34+strlen+2])
+	fmt.Println("Debug: skipped val: ",buf[34+strlen+2:34+strlen+6])
+	fmt.Println("Debug: skipped: ",buf[34+strlen+6:34+strlen+8])
+	iend:=34+strlen+12
+	fmt.Println("Debug: skipped val: ",buf[34+strlen+8:iend])
+	
+	fmt.Printf("Debug: second hash: 0x%x \n",buf[iend:iend+16])
+	fmt.Println("Debug: second ip: ",buf[iend+16:iend+20])
+	fmt.Println("Debug: second port: ",buf[iend+20:iend+22])
+	fmt.Println("Debug: second tag count: ",buf[iend+22:iend+26])
+	fmt.Println("Debug:second after: ",buf[iend+26:iend+26+100])
 	
 }
 
