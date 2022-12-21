@@ -323,6 +323,14 @@ func prcOneSearchResult(pos int, buf []byte) (readb int, fname_b []byte, hash_b 
 							default:
 								forbreak=true
 						}
+					case 7:
+						switch fmt.Sprintf("%s",tname) {
+							case "bitrate":
+								fmt.Println("DEBUG: bitrate:",buf[readb:readb+4])
+								readb+=4
+							default:
+								forbreak=true
+						}
 					default:
 						forbreak=true
 				}
