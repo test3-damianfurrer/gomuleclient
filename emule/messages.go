@@ -120,7 +120,7 @@ func prcOneSearchResult(pos int, buf []byte) (readb int){
 						readb+=4
 					case 211: //bs
 						fmt.Println("Debug: unknown tag/value: ",buf[readb:readb+4])
-						readb+=2
+						readb+=4
 					default:
 						forbreak=true
 				}
