@@ -72,12 +72,23 @@ func prcOneSearchResult(pos int, buf []byte) (readb int){
 		fmt.Println("Debug: tag indicator++", buf[readb:readb+5])
 		switch buf[readb] {
 			case 100:
-				if buf[readb+1] == 105 {
-					fmt.Println("Debug: some tagging/value: ",buf[readb:readb+4])
-					readb+=4 //idk, what this should be
-				} else {
-					forbreak=true
+				switch buf[readb+1] == 105 {
+					case 105:
+						fmt.Println("Debug: some tagging/value: ",buf[readb:readb+4])
+						readb+=4 //idk, what this should be
+					case 120:
+						if buf[readb+2] == 53 && buf[readb+3] == 48 { //dx50
+							fmt.Println("Debug: dx50 tagging: ",buf[readb:readb+4])
+							readb+=4
+							fmt.Println("Debug: dx50 value: ",buf[readb:readb+4])
+							readb+=4
+						} else {
+							forbreak=true
+						}
+					default:
+						forbreak=true
 				}
+				
 			case 120:
 				if buf[readb+1] == 118 && buf[readb+2] == 105 && buf[readb+3] == 100 { //118 105 100 == vid
 					fmt.Println("Debug: vid tagging: ",buf[readb:readb+4])
