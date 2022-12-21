@@ -229,7 +229,7 @@ func prcSearchResults(buf []byte){
 	prcread := 0
 	i := 0
 	bread2 := 0
-	for i = 0; i<20; i++ {
+	for i = 0; i<100; i++ {
 		//prcread += prcOneSearchResult(4+prcread,buf)
 		bread, fname_b, hash_b := prcOneSearchResult(4+prcread,buf)
 		if (len(fname_b)==0){
