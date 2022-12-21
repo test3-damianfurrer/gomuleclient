@@ -63,7 +63,7 @@ func prcSearchResults(buf []byte){
 	strlen := util.ByteToUint16(buf[32:34])
 	fmt.Println("Debug: strlen",strlen)
 	fmt.Println("Debug: str",buf[34:34+strlen])
-	fmt.Println("Debug: after str",buf[34+strlen:34+strlen+30])
+	fmt.Println("Debug: after str",buf[34+strlen:34+strlen+120])
 	
 }
 
