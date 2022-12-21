@@ -106,7 +106,11 @@ func prcOneSearchResult(pos int, buf []byte) (readb int){
 					readb+=2
 					fmt.Println("Debug: unknown value: ",buf[readb:readb+4],util.ByteToUint32(buf[readb:readb+4]))
 					readb+=4
-				} else {
+				} else if buf[readb+1] == 247 {
+					fmt.Println("Debug: unknown tag/value: ",buf[readb:readb+4])
+					readb+=4
+					//fake & gay
+				}else {
 					//break
 					forbreak=true
 				}
