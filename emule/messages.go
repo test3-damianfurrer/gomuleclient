@@ -143,7 +143,7 @@ func prcSearchResults(buf []byte){
 	prcread := prcOneSearchResult(4,buf)
 	fmt.Println("Debug: prcread",prcread)
 	//fmt.Println("Debug: (maybe + 12)should be",34+strlen-4)
-	iend:=prcread
+	iend:=4+prcread
 	
 	fmt.Printf("Debug: second hash: 0x%x \n",buf[iend:iend+16])
 	fmt.Println("Debug: second ip: ",buf[iend+16:iend+20])
