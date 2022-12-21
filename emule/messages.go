@@ -292,7 +292,7 @@ func prcOneSearchResult(pos int, buf []byte) (readb int, fname_b []byte, hash_b 
 						strlen:=int(util.ByteToUint16(buf[readb:readb+2]))
 						readb+=2
 						fname_b=buf[readb:readb+strlen]
-						fmt.Println("DEBUG: strbuf:"fname_b)
+						fmt.Println("DEBUG: strbuf:",fname_b)
 						readb+=strlen
 						
 				}
