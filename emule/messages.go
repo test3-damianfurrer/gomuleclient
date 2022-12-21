@@ -57,17 +57,46 @@ func prcOneSearchResult(pos int, buf []byte) (readb int){
 	readb+=4
 	fmt.Println("Debug: peer port: ",buf[readb:readb+2])
 	readb+=2
-	fmt.Println("Debug: tag count: ",buf[readb:readb+4],util.ByteToUint32(buf[readb:readb+4]))
+	tagcount:=util.ByteToUint32(buf[readb:readb+4])
+	fmt.Println("Debug: tag count: ",buf[readb:readb+4],tagcount)
 	readb+=4
-	fmt.Println("Debug: skipped: ",buf[readb:readb+2])
-	readb+=2
-	strlen := util.ByteToUint16(buf[readb:readb+2])
-	readb+=2
-	fmt.Println("Debug: strlen",strlen)
-	fmt.Println("Debug: str",buf[readb:readb+int(strlen)])
-	readb+=int(strlen)
-	fmt.Println("Debug: tag indicator", buf[readb])
-	fmt.Println("Debug: tag indicator++", buf[readb:readb+5])
+	//tag count is wrong man break.
+	forbreak:=false
+	for {
+		fmt.Println("Debug: tag indicator", buf[readb])
+		fmt.Println("Debug: tag indicator++", buf[readb:readb+5])
+		switch buf[readb] {
+			case 130:
+				if buf[readb+1] == 1 { //filename
+					fmt.Println("Debug: tagging: ",buf[readb:readb+2])
+					readb+=2
+					strlen := util.ByteToUint16(buf[readb:readb+2])
+					readb+=2
+					fmt.Println("Debug: strlen",strlen)
+					fmt.Println("Debug: str",buf[readb:readb+int(strlen)])
+					readb+=int(strlen)
+				} else {
+					//break
+					forbreak=true
+				}
+			//case 131:
+			//case 137:
+			default:
+				forbreak=true //break
+		}
+		if forbreak {
+			break
+		}
+	}
+	//fmt.Println("Debug: skipped: ",buf[readb:readb+2])
+	//readb+=2
+	//strlen := util.ByteToUint16(buf[readb:readb+2])
+	//readb+=2
+	//fmt.Println("Debug: strlen",strlen)
+	//fmt.Println("Debug: str",buf[readb:readb+int(strlen)])
+	//readb+=int(strlen)
+	//fmt.Println("Debug: tag indicator", buf[readb])
+	//fmt.Println("Debug: tag indicator++", buf[readb:readb+5])
 	readb-=pos
 	return
 }
@@ -94,8 +123,8 @@ func prcSearchResults(buf []byte){
 	fmt.Println("Debug: skipped val: ",buf[34+strlen+8:iend])
 	
 	prcread := prcOneSearchResult(4,buf)
-	fmt.Printf("Debug: prcread",prcread)
-	fmt.Printf("Debug: should be",34+strlen)
+	fmt.Println("Debug: prcread",prcread)
+	fmt.Println("Debug: should be",34+strlen-4)
 	
 	
 	fmt.Printf("Debug: second hash: 0x%x \n",buf[iend:iend+16])
