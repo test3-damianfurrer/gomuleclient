@@ -108,18 +108,21 @@ func prcOneSearchResult(pos int, buf []byte) (readb int){
 					forbreak=true
 				}
 			case 136:
-				if buf[readb+1] == 212 {
-					fmt.Println("Debug: unknown tagging: ",buf[readb:readb+2])
-					readb+=2
-					fmt.Println("Debug: unknown value: ",buf[readb:readb+4],util.ByteToUint32(buf[readb:readb+4]))
-					readb+=4
-				} else if buf[readb+1] == 247 {
-					fmt.Println("Debug: unknown tag/value: ",buf[readb:readb+4])
-					readb+=4
-					//fake & gay
-				}else {
-					//break
-					forbreak=true
+			
+				switch buf[readb+1] {
+					case 212:
+						fmt.Println("Debug: unknown tagging: ",buf[readb:readb+2])
+						readb+=2
+						fmt.Println("Debug: unknown value: ",buf[readb:readb+4],util.ByteToUint32(buf[readb:readb+4]))
+						readb+=4
+					case 247: //bs
+						fmt.Println("Debug: unknown tag/value: ",buf[readb:readb+4])
+						readb+=4
+					case 211: //bs
+						fmt.Println("Debug: unknown tag/value: ",buf[readb:readb+4])
+						readb+=2
+					default:
+						forbreak=true
 				}
 			case 137:
 				if buf[readb+1] == 21 {
@@ -161,7 +164,8 @@ func prcOneSearchResult(pos int, buf []byte) (readb int){
 	54 18 
 	7 0 0 0
 	
-	100 105 118 51 136 211 38 21 
+	100 105 118 51 
+	136 211 38 21 
 	149 15 208 203 45 213 224 178 126 67 15 168 114 8 151 64 
 	95 235 173 246 
 	54 18 
