@@ -66,6 +66,16 @@ func prcOneSearchResult(pos int, buf []byte) (readb int){
 		fmt.Println("Debug: tag indicator", buf[readb])
 		fmt.Println("Debug: tag indicator++", buf[readb:readb+5])
 		switch buf[readb] {
+			case 120:
+				if buf[readb+1] == 118 && buf[readb+2] == 105 && buf[readb+3] == 100 { //118 105 100 == vid
+					fmt.Println("Debug: vid tagging: ",buf[readb:readb+4])
+					readb+=4
+					fmt.Println("Debug: unknown value: ",buf[readb:readb+4])
+					readb+=4
+				} else {
+					//break
+					forbreak=true
+				}
 			case 130:
 				if buf[readb+1] == 1 { //filename
 					fmt.Println("Debug: tagging: ",buf[readb:readb+2])
@@ -82,6 +92,16 @@ func prcOneSearchResult(pos int, buf []byte) (readb int){
 				}
 			case 131:
 				if buf[readb+1] == 2 {
+					fmt.Println("Debug: unknown tagging: ",buf[readb:readb+2])
+					readb+=2
+					fmt.Println("Debug: unknown value: ",buf[readb:readb+4])
+					readb+=4
+				} else {
+					//break
+					forbreak=true
+				}
+			case 136:
+				if buf[readb+1] == 212 {
 					fmt.Println("Debug: unknown tagging: ",buf[readb:readb+2])
 					readb+=2
 					fmt.Println("Debug: unknown value: ",buf[readb:readb+4])
