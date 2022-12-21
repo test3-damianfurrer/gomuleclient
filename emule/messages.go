@@ -152,7 +152,7 @@ func prcSearchResults(buf []byte){
 	
 	prcread := 0
 	i := 0
-	for i = 0; i<5; i++ {
+	for i = 0; i<6; i++ {
 		prcread += prcOneSearchResult(4+prcread,buf)
 		fmt.Println("Debug: prcread",prcread)
 	}
