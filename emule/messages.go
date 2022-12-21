@@ -49,6 +49,27 @@ func decodeE3(btype byte,buf []byte, client *Client){
         }
 }
 
+func prcOneSearchResult(pos int, *buf []byte) (readb int){
+	readb=pos
+	fmt.Printf("Debug: hash: 0x%x \n",*buf[readb:readb+16])
+	readb+=16
+	fmt.Println("Debug: peer ip: ",*buf[readb:readb+4])
+	readb+=4
+	fmt.Println("Debug: peer port: ",*buf[readb:readb+2])
+	readb+=2
+	fmt.Println("Debug: tag count: ",*buf[readb:readb+4],util.ByteToUint32(*buf[readb:readb+4]))
+	readb+=4
+	fmt.Println("Debug: skipped: ",*buf[readb:readb+2])
+	readb+=2
+	strlen := util.ByteToUint16(*buf[readb:readb+2])
+	readb+=2
+	fmt.Println("Debug: strlen",strlen)
+	fmt.Println("Debug: str",*buf[readb:readb+int(strlen)])
+	readb+=int(strlen)
+	fmt.Println("Debug: tag indicator", *buf[readb])
+	fmt.Println("Debug: tag indicator++", *buf[readb:readb+5])
+}
+
 func prcSearchResults(buf []byte){
 	rescount := util.ByteToUint32(buf[0:4])
 	fmt.Println("Debug: search rescount: ",rescount)
@@ -69,6 +90,11 @@ func prcSearchResults(buf []byte){
 	fmt.Println("Debug: skipped: ",buf[34+strlen+6:34+strlen+8])
 	iend:=34+strlen+12
 	fmt.Println("Debug: skipped val: ",buf[34+strlen+8:iend])
+	
+	prcread := prcOneSearchResult(4,&buf)
+	fmt.Printf("Debug: prcread",prcread)
+	fmt.Printf("Debug: should be",34+strlen)
+	
 	
 	fmt.Printf("Debug: second hash: 0x%x \n",buf[iend:iend+16])
 	fmt.Println("Debug: second ip: ",buf[iend+16:iend+20])
