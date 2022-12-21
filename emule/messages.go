@@ -66,6 +66,13 @@ func prcOneSearchResult(pos int, buf []byte) (readb int){
 		fmt.Println("Debug: tag indicator", buf[readb])
 		fmt.Println("Debug: tag indicator++", buf[readb:readb+5])
 		switch buf[readb] {
+			case 100:
+				if buf[readb+1] == 105 {
+					fmt.Println("Debug: some tagging/value: ",buf[readb:readb+4])
+					readb+=4 //idk, what this should be
+				} else {
+					forbreak=true
+				}
 			case 120:
 				if buf[readb+1] == 118 && buf[readb+2] == 105 && buf[readb+3] == 100 { //118 105 100 == vid
 					fmt.Println("Debug: vid tagging: ",buf[readb:readb+4])
@@ -153,6 +160,12 @@ func prcOneSearchResult(pos int, buf []byte) (readb int){
 	81 184 64 167 
 	54 18 
 	7 0 0 0
+	
+	100 105 118 51 136 211 38 21 
+	149 15 208 203 45 213 224 178 126 67 15 168 114 8 151 64 
+	95 235 173 246 
+	54 18 
+	7 0 0 0
 	*/
 	
 	readb-=pos
@@ -165,7 +178,7 @@ func prcSearchResults(buf []byte){
 	
 	prcread := 0
 	i := 0
-	for i = 0; i<8; i++ {
+	for i = 0; i<9; i++ {
 		prcread += prcOneSearchResult(4+prcread,buf)
 		fmt.Println("Debug: prcread",prcread)
 	}
