@@ -26,7 +26,7 @@ func decodeD4(btype byte,buf []byte,dc libdeflate.Decompressor, client *Client){
 		return
 	}
 	fmt.Println("DEBUG: decompressed length:",blen)
-	fmt.Println("DEBUG: decompressed",decompressed[0:30])
+	fmt.Println("DEBUG: decompressed",decompressed[0:40])
 	decodeE3(btype,decompressed,client)
 }
 
@@ -52,9 +52,9 @@ func decodeE3(btype byte,buf []byte, client *Client){
 func prcSearchResults(buf []byte){
 	rescount := util.ByteToUint32(buf[0:4])
 	fmt.Println("Debug: search rescount: ",rescount)
-	firstHash := util.ByteToUint32(buf[4:20])
+	//firstHash := util.ByteToUint32(buf[4:20])
 	
-	fmt.Printf("Debug: first hash: 0x%x \n",firstHash)
+	fmt.Printf("Debug: first hash: 0x%x \n",buf[4:20])
 	fmt.Println("Debug: peer ip: ",buf[20:24])
 	fmt.Println("Debug: peer port: ",buf[24:26])
 	fmt.Println("Debug: tag count: ",buf[26:30],util.ByteToUint32(buf[26:30]))
