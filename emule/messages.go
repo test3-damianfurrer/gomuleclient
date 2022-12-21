@@ -110,6 +110,7 @@ func prcIdChange(buf []byte, client *Client){
 		fmt.Println(" ",buf[12:16])
 	}
 	client.AskServerList()
+	client.SearchServer()
 	/*
 	//test ask for serverlist
 	//client.Conn
