@@ -74,6 +74,7 @@ func prcOneSearchResult(pos int, buf []byte) (readb int){
 					readb+=2
 					fmt.Println("Debug: strlen",strlen)
 					fmt.Println("Debug: str",buf[readb:readb+int(strlen)])
+					fmt.Printf("Debug: str: %s\n",buf[readb:readb+int(strlen)])
 					readb+=int(strlen)
 				} else {
 					//break
@@ -144,6 +145,7 @@ func prcSearchResults(buf []byte){
 	fmt.Println("Debug: prcread",prcread)
 	//fmt.Println("Debug: (maybe + 12)should be",34+strlen-4)
 	iend:=4+prcread
+	prcread += prcOneSearchResult(4+prcread,buf)
 	
 	fmt.Printf("Debug: second hash: 0x%x \n",buf[iend:iend+16])
 	fmt.Println("Debug: second ip: ",buf[iend+16:iend+20])
