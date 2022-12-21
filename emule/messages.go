@@ -284,6 +284,11 @@ func prcOneSearchResult(pos int, buf []byte) (readb int, fname_b []byte, hash_b 
 			case 2: //string
 				readb+=1
 				tnsize:=int(util.ByteToUint16(buf[readb:readb+2]))
+				if tnsize > 255 {
+					readb-=1
+					forbreak=true
+					break
+				}
 				readb+=2
 				tname:=buf[readb:readb+tnsize]
 				readb+=tnsize
@@ -351,6 +356,11 @@ func prcOneSearchResult(pos int, buf []byte) (readb int, fname_b []byte, hash_b 
 			case 3: //int
 				readb+=1
 				tnsize:=int(util.ByteToUint16(buf[readb:readb+2]))
+				if tnsize > 255 { //assumed no name longer
+					readb-=1
+					forbreak=true
+					break
+				}
 				readb+=2
 				tname:=buf[readb:readb+tnsize]
 				readb+=tnsize
