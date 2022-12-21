@@ -126,7 +126,6 @@ func prcOneSearchResult(pos int, buf []byte) (readb int, fname_b []byte, hash_b 
 					forbreak=true
 				}
 			case 136:
-			
 				switch buf[readb+1] {
 					case 212:
 						fmt.Println("Debug: unknown tagging: ",buf[readb:readb+2])
@@ -143,14 +142,17 @@ func prcOneSearchResult(pos int, buf []byte) (readb int, fname_b []byte, hash_b 
 						forbreak=true
 				}
 			case 137:
-				if buf[readb+1] == 21 {
-					fmt.Println("Debug: unknown tagging: ",buf[readb:readb+2])
-					readb+=2
-					fmt.Println("Debug: unknown value: ",buf[readb:readb+4],util.ByteToUint32(buf[readb:readb+4]))
-					readb+=4
-				} else {
-					//break
-					forbreak=true
+				switch buf[readb+1] {
+					case 21:
+						fmt.Println("Debug: unknown tagging: ",buf[readb:readb+2])
+						readb+=2
+						fmt.Println("Debug: unknown value: ",buf[readb:readb+4],util.ByteToUint32(buf[readb:readb+4]))
+						readb+=4
+					case 212: //bs
+						fmt.Println("Debug: unknown tag/value: ",buf[readb:readb+4])
+						readb+=4
+					default:
+						forbreak=true
 				}
 			case 139:
 				if buf[readb+1] == 1 {
