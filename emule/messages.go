@@ -283,7 +283,7 @@ func prcOneSearchResult(pos int, buf []byte) (readb int, fname_b []byte, hash_b 
 		switch buf[readb] { //type
 			case 2: //string
 				readb+=1
-				tnsize:=util.ByteToUint16(buf[readb:readb+2])
+				tnsize:=int(util.ByteToUint16(buf[readb:readb+2]))
 				readb+=2
 				tname:=buf[readb:readb+tnsize]
 				readb+=tnsize
