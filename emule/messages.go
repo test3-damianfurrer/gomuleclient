@@ -63,6 +63,11 @@ func prcOneSearchResult(pos int, buf []byte) (readb int){
 	//tag count is wrong man break.
 	forbreak:=false
 	for {
+		//[157 1 85 45 66 111 111 116 32 57 54 46 97 118 105 131 2 0 224 21 126 137 21 11 137 48 11 136 212 124 5 148 213 100 120 53 48 136 211 204 46 26 255 154 116 172 162 235 163 143 237 166 47 133 235 224 59 228 179 14 0 82 80 4 0 0 0 130 1 45 0 68 97 115 32 66 111 111 116 32 49 120 48 53 32 45 32 69 112 105 115 111 100 105 111 32 48 53 32 91]
+		//85 45 66 111 111 116 32 57 54 46 97 118 105
+		//U-Boot 96.avi
+		//chars: 13
+		//no len encoded
 		fmt.Println("Debug: tag indicator", buf[readb])
 		fmt.Println("Debug: tag indicator++", buf[readb:readb+5])
 		switch buf[readb] {
@@ -137,6 +142,22 @@ func prcOneSearchResult(pos int, buf []byte) (readb int){
 			case 139:
 				if buf[readb+1] == 1 {
 					readb+=2 //idk, what this should be
+				} else {
+					forbreak=true
+				}
+			case 157:
+				if buf[readb+1] == 1 {
+					readb+=2
+					bufstr:=make([]byte,0)
+					for  {
+						if buf[readb+1] == 131 {
+							break
+						}
+						readb+=1
+						bufstr=append(bufstr,buf[readb])
+					}
+					fmt.Println("(obfuscated?)name buf:",bufstr)
+					fmt.Printf("(obfuscated?)name buf:%s\n",bufstr)
 				} else {
 					forbreak=true
 				}
