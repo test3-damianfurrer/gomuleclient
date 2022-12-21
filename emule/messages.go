@@ -296,6 +296,52 @@ func prcOneSearchResult(pos int, buf []byte) (readb int, fname_b []byte, hash_b 
 								fname_b=buf[readb:readb+strlen]
 								fmt.Println("DEBUG: strbuf:",fname_b)
 								readb+=strlen
+							case 3:
+								strlen:=int(util.ByteToUint16(buf[readb:readb+2]))
+								readb+=2
+								str:=buf[readb:readb+strlen]
+								fmt.Printf("DEBUG: file type: %s\n",str)
+								readb+=strlen
+							case 4:
+								strlen:=int(util.ByteToUint16(buf[readb:readb+2]))
+								readb+=2
+								str:=buf[readb:readb+strlen]
+								fmt.Printf("DEBUG: file format: %s\n",str)
+								readb+=strlen
+							default:
+								forbreak=true
+						}
+					case 5:
+						switch fmt.Sprintf("%s",tname) {
+							case "codec":
+								strlen:=int(util.ByteToUint16(buf[readb:readb+2]))
+								readb+=2
+								str:=buf[readb:readb+strlen]
+								fmt.Printf("DEBUG: codec: %s\n",str)
+								readb+=strlen
+							case "Title":
+								strlen:=int(util.ByteToUint16(buf[readb:readb+2]))
+								readb+=2
+								str:=buf[readb:readb+strlen]
+								fmt.Printf("DEBUG: Title: %s\n",str)
+								readb+=strlen
+							default:
+								forbreak=true
+						}
+					case 6:
+						switch fmt.Sprintf("%s",tname) {
+							case "Artist":
+								strlen:=int(util.ByteToUint16(buf[readb:readb+2]))
+								readb+=2
+								str:=buf[readb:readb+strlen]
+								fmt.Printf("DEBUG: Artist: %s\n",str)
+								readb+=strlen
+							case "Album":
+								strlen:=int(util.ByteToUint16(buf[readb:readb+2]))
+								readb+=2
+								str:=buf[readb:readb+strlen]
+								fmt.Printf("DEBUG: Album: %s\n",str)
+								readb+=strlen
 							default:
 								forbreak=true
 						}
