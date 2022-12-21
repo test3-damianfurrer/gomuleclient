@@ -290,7 +290,7 @@ func prcOneSearchResult(pos int, buf []byte) (readb int, fname_b []byte, hash_b 
 				switch len(tname) {
 					case 1:
 						switch tname[0] {
-							case []byte{1}: //file name
+							case 1: //file name
 								strlen:=int(util.ByteToUint16(buf[readb:readb+2]))
 								readb+=2
 								fname_b=buf[readb:readb+strlen]
