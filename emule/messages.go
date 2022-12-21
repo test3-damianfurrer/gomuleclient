@@ -166,7 +166,11 @@ func prcSearchResults(buf []byte){
 	//fmt.Println("Debug: (maybe + 12)should be",34+strlen-4)
 	iend:=4+prcread
 	prcread += prcOneSearchResult(4+prcread,buf)
-	
+	fmt.Println("Debug: prcread",prcread)
+	prcread += prcOneSearchResult(4+prcread,buf)
+	fmt.Println("Debug: prcread",prcread)
+	fmt.Println("Debug: after 3:",buf[4+prcread:4+prcread+100])
+	/*
 	fmt.Printf("Debug: second hash: 0x%x \n",buf[iend:iend+16])
 	fmt.Println("Debug: second ip: ",buf[iend+16:iend+20])
 	fmt.Println("Debug: second port: ",buf[iend+20:iend+22])
@@ -177,6 +181,7 @@ func prcSearchResults(buf []byte){
 	fmt.Println("Debug: strlen2",strlen2)
 	fmt.Println("Debug: str2",buf[iend+30:iend+30+strlen2])
 	fmt.Println("Debug:second after: ",buf[iend+30+strlen2:iend+30+strlen2+100])
+	*/
 	//248 1 0 0 -> 504 results
 	
 	// [201 184 52 216 95 73 187 94 17 15 11 174 35 74 120 95] 
