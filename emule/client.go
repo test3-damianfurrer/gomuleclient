@@ -200,7 +200,8 @@ func (this *Client) Connect() {
 	body = append(body,util.UInt32ToByte(uint32(4))...) //tag count
 	body = append(body,util.EncodeByteTagString(util.EncodeByteTagNameInt(0x1),this.Username)...)
 	body = append(body,util.EncodeByteTagInt(util.EncodeByteTagNameInt(0x11),uint32(0x3C))...)
-	body = append(body,util.EncodeByteTagInt(util.EncodeByteTagNameInt(0x20),uint32(0b1100011101))...)
+	//body = append(body,util.EncodeByteTagInt(util.EncodeByteTagNameInt(0x20),uint32(0b1100011101))...)
+	body = append(body,util.EncodeByteTagInt(util.EncodeByteTagNameInt(0x20),uint32(0x1))...)
 	body = append(body,util.EncodeByteTagInt(util.EncodeByteTagNameInt(0xfb),util.ByteToUint32([]byte{128, 13, 4, 3}))...)
 	//body = append(body,util.EncodeByteTagInt(util.EncodeByteTagNameInt(0x20),)...)
 	
